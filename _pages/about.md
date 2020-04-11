@@ -1,8 +1,10 @@
 ---
 permalink: /about/
 title: "About"
+author_profile: true
 ---
 
-Tempor velit sint sunt ipsum tempor enim ad qui ullamco. Est dolore anim ad velit duis dolore minim sunt aliquip amet commodo labore. Ut eu pariatur aute ea aute excepteur laborum. Esse ea esse excepteur minim mollit qui cillum excepteur ex dolore magna. Labore deserunt fugiat incididunt incididunt sint ea. Consequat dolore aute laboris quis proident quis non et est consectetur ex eiusmod sit culpa.
-
-Cupidatat ea do et in excepteur in. Ad nostrud ut est esse eu duis ea sunt eiusmod. Aliquip tempor veniam sint elit fugiat. Velit incididunt laboris amet incididunt labore dolore irure velit excepteur commodo deserunt laborum. Consectetur eu fugiat veniam veniam Lorem labore magna eiusmod. Ea occaecat reprehenderit pariatur consectetur minim labore ut aliquip.
+Hi all, welcome to my blog! <br>
+Great to be able to share a bit and I hope it helps you out in someway. <br>
+My name is John Alfaro, otiginaly from Bogota-Colombia  and loving living in Melbourne Australia for the last 13 years. I do love everything around automation and of course Cloud<br>
+I'm always open to get in touch with people alike, just send me a tweet [@j_alex_alfaro](https://twitter.com/j_alex_alfaro), Plese let me know what do you think and what interest you or issues you are having that I may have experienced as well
