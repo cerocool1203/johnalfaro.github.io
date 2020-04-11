@@ -1,6 +1,9 @@
-# main links links
 main:
-  - title: "Conferences"
-    url: "/conferences/"
-  - title: "About John"
-    url: "/about-me/"
+  - title: "Posts"
+    url: /posts/
+  - title: "Categories"
+    url: /categories/
+  - title: "Tags"
+    url: /tags/
+  - title: "About"
+    url: /about/
