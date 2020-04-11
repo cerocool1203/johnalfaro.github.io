@@ -77,8 +77,8 @@ author:
   bio    : "Breathing Cloud one day at a time"
   links:
     - label: "Email"
-      icon: "fas fa-envelope"
-      url: "john.alfaro08@gmail.com"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:john.alfaro08@gmail.com"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       url: "https://cerocool1203.github.io/johnalfaro.github.io/"
