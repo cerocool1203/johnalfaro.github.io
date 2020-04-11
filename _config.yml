@@ -89,7 +89,7 @@ google_ad_slot           :
 author:
   name             : "John Alfaro"
   avatar           : 
-  bio              : "Breathing Cloud day a a time"
+  bio              : "Breathing Cloud one day at a time"
   location         : "Melbourne Australia"
   email            : "jalex_gogo@hotmail.com"
   # uri              :
@@ -181,7 +181,8 @@ timezone: Australia/Melbourne # http://en.wikipedia.org/wiki/List_of_tz_database
 
 
 # Plugins
-gems:
+plugins:
+  - null:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
