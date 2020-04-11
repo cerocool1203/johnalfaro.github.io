@@ -1,0 +1,6 @@
+# main links links
+main:
+  - title: "Conferences"
+    url: "/conferences/"
+  - title: "About John"
+    url: "/about-me/"
