@@ -28,7 +28,7 @@ atom_feed:
   path                   : "http://feeds.feedburner.com/TheCloudJourney"
 # Build settings
 markdown: kramdown
-remote_theme: mmistakes/minimal-mistakes
+remote_theme: "mmistakes/minimal-mistakes@4.19.3"
 # Outputting
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
