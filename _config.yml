@@ -34,7 +34,7 @@ permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
 timezone: Australia/Melbourne # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-
+google-site-verification: 'e5HjbhvngEteM7CsvNacmyc1_uIjlZsL01Eu348fMwQ'
 include:
   - .htaccess
   - _pages
