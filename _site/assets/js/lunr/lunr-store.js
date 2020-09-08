@@ -10,4 +10,10 @@ var store = [{
         "tags": ["Terraform Cloud","Terraform Enterprise","Terraform 13","Azure"],
         "url": "http://localhost:4000/blog/T13-for_each/",
         "teaser": "http://localhost:4000/"
+      },{
+        "title": "Terraform Cloud - Test Drive Series",
+        "excerpt":"I have been deploying my infrastructure using Terraform Open Source. However, given you can use Terraform Cloud for free you get some features like create and provision infrastructure as well as collaboration which you can do it up to 5 people… which is perfect for what I wanted to achieve....","categories": ["Blog"],
+        "tags": ["Terraform Cloud","Terraform Enterprise","Azure"],
+        "url": "http://localhost:4000/blog/TerraformCloud/",
+        "teaser": "http://localhost:4000/"
       }]

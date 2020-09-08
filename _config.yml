@@ -23,6 +23,7 @@ github_username: cerocool1203
 repository: "cerocool1203/johnalfaro.github.io"
 minimal_mistakes_skin: dark
 words_per_minute         : 200
+logo                     : "/assets/images/cero.jpg"
 search: true
 atom_feed:
   path                   : "http://feeds.feedburner.com/TheCloudJourney"

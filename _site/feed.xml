@@ -1,4 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-08-26T14:04:20+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Cloud Journey</title><subtitle>a bit of everything around cloud specially around Azure.</subtitle><author><name>John Alfaro</name></author><entry><title type="html">Terraform 13 - for_each - Test Drive</title><link href="http://localhost:4000/blog/T13-for_each/" rel="alternate" type="text/html" title="Terraform 13 - for_each - Test Drive" /><published>2020-08-26T00:00:00+00:00</published><updated>2020-08-26T00:00:00+00:00</updated><id>http://localhost:4000/blog/T13-for_each</id><content type="html" xml:base="http://localhost:4000/blog/T13-for_each/">&lt;p&gt;🚀Terraform 0.13 is the new trend in the Terraform world IaC and one of the new features is the most wanted for_each🚀.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-09-08T12:42:15+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Cloud Journey</title><subtitle>a bit of everything around cloud specially around Azure.</subtitle><author><name>John Alfaro</name></author><entry><title type="html">Terraform Cloud - Test Drive Series</title><link href="http://localhost:4000/blog/TerraformCloud/" rel="alternate" type="text/html" title="Terraform Cloud - Test Drive Series" /><published>2020-09-07T00:00:00+00:00</published><updated>2020-09-07T00:00:00+00:00</updated><id>http://localhost:4000/blog/TerraformCloud</id><content type="html" xml:base="http://localhost:4000/blog/TerraformCloud/">&lt;p&gt;I have been deploying my infrastructure using Terraform Open Source. However, given you can use &lt;a href=&quot;https://www.hashicorp.com/products/terraform/pricing/&quot;&gt;Terraform Cloud for free&lt;/a&gt; you get some features like create and provision infrastructure as well as collaboration which you can do it up to 5 people… which is perfect for what I wanted to achieve. In addition, you get a Terraform Module Registry where you can store and consume modules.&lt;/p&gt;
+
+&lt;h2 id=&quot;account-creation&quot;&gt;Account Creation&lt;/h2&gt;
+
+&lt;p&gt;What do I need to get started&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Create an Account in  &lt;a href=&quot;https://app.terraform.io/signup/account?utm_source=docs_banner&quot;&gt;terraform.io&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Create a Terraform Cloud Organization&lt;/li&gt;
+  &lt;li&gt;Have your Version Control System provider for your code integration(I will start with this one but in the long run I think I will be using API-driven workflow due to flexibility to trigger from a more comprehensive pipeline deployment where I can have my infra and my application code)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;So I decided to open an account and leverage my Version Control System (VCS) account which resides in Github to start exploring a bit deeper. By the time I started the article I already had the integration done but you can follow the &lt;a href=&quot;https://www.terraform.io/docs/cloud/vcs/index.html&quot;&gt;terraform documentation&lt;/a&gt; as you may be using a different VCS provider.&lt;/p&gt;
+
+&lt;p&gt;So it kind of looks like this 👇… your own Terraform Cloud (SaaS version)&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2020-09-03/tfc.gif&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;structure&quot;&gt;Structure&lt;/h2&gt;
+
+&lt;p&gt;I decided to build a Hub &amp;amp; Spoke scenario where I have three workspaces&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;HUB workspace where I have all my platform layer and NVA appliance  = &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cerocool-azure-tenant&lt;/code&gt;       👉    Deploys all subscription platform components&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Sydney Spoke                                                        = &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cerocool-application-syd&lt;/code&gt;    👉    Deploys infra and application(s) into the Virtual Network (vNet)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Melbourne Spoke or Application (just to explorer more)              = &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cerocool-application-mel&lt;/code&gt;    👉    Deploys infra and application(s) into the Virtual Network (vNet)&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Given that Sydney is the region that usually gets all the love I will deploy most of my infra there as new preview features are released here&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2020-09-03/hub-spoke.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;terraform-configuration&quot;&gt;Terraform Configuration&lt;/h2&gt;
+
+&lt;p&gt;To start consuming those workspaces I did create &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cerocool-azure-tenant&lt;/code&gt; workspace manually… I guess you always have to start somewhere🤨.. and I have added all the necessary Environment variables from my Azure Service Principal so it can interact with my Azure subscription.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;My Service Principal will be carrying tasks for deploying the infrastructure but also to do role assignments so given those requirements I assigned &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Owner role&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This changes the way I interact from my configuration as well as my backend
+&lt;img src=&quot;/assets/images/Blog/2020-09-03/opens.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;terraform-backend&quot;&gt;Terraform Backend&lt;/h2&gt;
+
+&lt;p&gt;By default, I was using local backend then I moved to State Storage using an Azure Storage Account which provides state locking…but now I have my state file in Terraform Cloud which support remote operations as for my last two methods all operations were run locally, this is not as key on my environment but on an enterprise environment where multiple people are collaborating this can be key for user experience as you will have a few variables like not relaying on your workstation or scary one sharing credentials to interact with Azure❌&lt;/p&gt;
+
+&lt;p&gt;so what’s a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Backend&lt;/code&gt;,,, it is a term to define how the state is loaded and how the usual operations are executed like apply, destroy, etc.
+&lt;img src=&quot;/assets/images/Blog/2020-09-03/backend.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;interacting-with-terraform-cloud&quot;&gt;Interacting with Terraform Cloud&lt;/h2&gt;
+
+&lt;p&gt;After we have some of the requirements met to start deploying your infrastructure. You need to somehow communicate with Terraform Cloud. Given my environment I was able to run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;terraform login&lt;/code&gt; which is a command released not long ago that allows you obtain automatically an API token. Depending on your environment, you may not be able to use this command so you will generate and save your token on different way. This token gets stored on your local machine and looks like the one below 🤯&lt;/p&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;s2&quot;&gt;&quot;credentials&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s2&quot;&gt;&quot;app.terraform.io&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;s2&quot;&gt;&quot;token&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;YOUR OWN TOKEN&quot;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This token is stored on a file called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;credentials.tfrc.json&lt;/code&gt; which on my Windows laptop is stored on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\Users\me\AppData\Roaming\terraform.d\credentials.tfrc.json&lt;/code&gt;&lt;/p&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Just in case&lt;/strong&gt; If you have your own hostname then you need to replace it like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;terraform login contoso&lt;/code&gt; as by default it is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;app.terraform.io&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;After doing all of this we are ready to start planning and applying our Azure infrastructure in this case. Given this is my sandpit environment I did not migrate my state file to Terraform Cloud instead I did start from scratch.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+&lt;p&gt;This was just an overview of my journey from Terraform Open Source to Terraform Cloud. I will continue on digging and exploring a bit more into some of the benefits you get by using Terraform Cloud for small teams. I have signed for a free trial to explore some of the cool features like cost estimation, sentinel Policies and of course RBAC. I hope this has been informative and helpful⚔&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Azure" /><summary type="html">This article provides an idea on how to leverage Terraform Cloud to deploy your Infrastructure as code in Azure</summary></entry><entry><title type="html">Terraform 13 - for_each - Test Drive</title><link href="http://localhost:4000/blog/T13-for_each/" rel="alternate" type="text/html" title="Terraform 13 - for_each - Test Drive" /><published>2020-08-26T00:00:00+00:00</published><updated>2020-08-26T00:00:00+00:00</updated><id>http://localhost:4000/blog/T13-for_each</id><content type="html" xml:base="http://localhost:4000/blog/T13-for_each/">&lt;p&gt;🚀Terraform 0.13 is the new trend in the Terraform world IaC and one of the new features is the most wanted for_each🚀.&lt;/p&gt;
 
 &lt;p&gt;I have all my Azure infrastructure currently deployed using Terraform 12. Given we already got v13 which judging for the number indicates it maybe unlucky, but 2020 cannot be beaten with the unlucky connotation😂&lt;/p&gt;
 
