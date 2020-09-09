@@ -16,7 +16,7 @@
 locale                   : "en-US"
 title: "The Cloud Journey"
 email: "john.alfaro08@gmail.com"
-url                      : "https://cerocool1203.github.io/johnalfaro.github.io/" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
+url                      : "https:/blog.johnalfaro.com/" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 description: "a bit of everything around cloud specially around Azure."
 twitter_username: j_alex_alfaro
 github_username: cerocool1203
