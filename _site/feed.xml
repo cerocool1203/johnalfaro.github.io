@@ -1,4 +1,292 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-03-29T11:39:30+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Cloud Journey</title><subtitle>a bit of everything around cloud specially around Azure.</subtitle><author><name>John Alfaro</name></author><entry><title type="html">Terraform Cloud - Test Drive Series</title><link href="http://localhost:4000/blog/TerraformCloud/" rel="alternate" type="text/html" title="Terraform Cloud - Test Drive Series" /><published>2020-09-08T00:00:00+00:00</published><updated>2020-09-08T00:00:00+00:00</updated><id>http://localhost:4000/blog/TerraformCloud</id><content type="html" xml:base="http://localhost:4000/blog/TerraformCloud/">&lt;p&gt;I have been deploying my infrastructure using Terraform Open Source. However, given you can use &lt;a href=&quot;https://www.hashicorp.com/products/terraform/pricing/&quot;&gt;Terraform Cloud for free&lt;/a&gt; you get some features like create and provision infrastructure as well as collaboration which you can do it up to 5 people… which is perfect for what I wanted to achieve. In addition, you get a Terraform Module Registry where you can store and consume modules.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-04-04T09:09:32+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Cloud Journey</title><subtitle>a bit of everything around cloud specially around Azure.</subtitle><author><name>John Alfaro</name></author><entry><title type="html">Deploying AKS using Bicep, because ARM is not strong enough :🦾!!!</title><link href="http://localhost:4000/blog/Bicep/" rel="alternate" type="text/html" title="Deploying AKS using Bicep, because ARM is not strong enough :🦾!!!" /><published>2021-04-02T00:00:00+00:00</published><updated>2021-04-02T00:00:00+00:00</updated><id>http://localhost:4000/blog/Bicep</id><content type="html" xml:base="http://localhost:4000/blog/Bicep/">&lt;p&gt;&lt;a href=&quot;https://github.com/Azure/bicep&quot;&gt;Project Bicep&lt;/a&gt; is taking ARM to the next level and it is making lots of good noise in the IaC  world. I have been using terraform for a while so I decided to check it out and see how it compares to HCL language to deploy IaC in Azure Platform and also to see how easy it is to author these kind of templates.  :astonished:
+Given that now Bicep support the creation of modules it makes it even more appealing, still early stages but looking forward to feature parity to terraform&lt;/p&gt;
+
+&lt;h2 id=&quot;environment-preparation-for-bicep&quot;&gt;Environment preparation for Bicep&lt;/h2&gt;
+
+&lt;p&gt;What do I need to get started?&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;I am using WSL2 on Win10 for my environment so I have updated my Azure CLI version to the latest, as it is required to be on v2.20 or later. Then I installed Bicep compiler running the command &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;az bicep install&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;I installed the &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-bicep&quot;&gt;Bicep extension&lt;/a&gt; which definitely makes life so much easier as the intellisense is great and it makes authoring quite enjoyable&lt;/li&gt;
+  &lt;li&gt;I did rely on the &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/templates/&quot;&gt;Azure ARM Template&lt;/a&gt; documentation in order to check the values to use in the Bicep template regarding resource types similar to the &lt;a href=&quot;https://registry.terraform.io/providers/hashicorp/azurerm/latest&quot;&gt;Azure RM provider&lt;/a&gt; documentation in terraform. I had a few challenges here as Terraform API calls may use different variable names to interact with the Azure API’s.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;aks-the-terraform-way&quot;&gt;AKS the terraform way&lt;/h2&gt;
+
+&lt;p&gt;My terraform deployment uses modules stored in my Private Terraform Cloud Module repository. In that case, the structure of the deployment files looks as per below. The module structure in terraform is per below the right hand side. For instance, my deployment &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AKS Deployment&lt;/code&gt; will call all the approved modules to be consumed and deploy the whole solution.&lt;/p&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;AKS&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Deployment&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AKS&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Module&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;variables&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;VNet&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Module&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;variables&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Subnet&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Module&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;variables&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Route&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Table&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Module&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;variables&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_variables&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_providers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;tf&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.tf&lt;/code&gt; file of the AKS module looks like below with all the values to be provided by populating the variables. 👇&lt;/p&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;azurerm_kubernetes_cluster&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;                      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;resource_group_name&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resource_group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;                  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resource_group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;dns_prefix&lt;/span&gt;                &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;dns_prefix&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;kubernetes_version&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kubernetes_version&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;private_cluster_enabled&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;default_node_pool&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;                 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;orchestrator_version&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;kubernetes_version&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;node_count&lt;/span&gt;           &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;node_count&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;vm_size&lt;/span&gt;              &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;node_size&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;os_disk_size_gb&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;os_disk_size_gb&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;vnet_subnet_id&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;node_vnet_subnet_id&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;max_pods&lt;/span&gt;             &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;max_pods&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;enable_auto_scaling&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;min_count&lt;/span&gt;            &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;auto_scaling_min_count&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;max_count&lt;/span&gt;            &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;auto_scaling_max_count&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;availability_zones&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;availability_zones&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;addon_profile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;azure_policy&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;enabled&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;role_based_access_control&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;enabled&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;azure_active_directory&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;managed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+
+      &lt;span class=&quot;nx&quot;&gt;admin_group_object_ids&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;aad_group_id&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nx&quot;&gt;identity&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;SystemAssigned&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;network_profile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;network_plugin&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;azure&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;network_policy&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;network_policy&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;load_balancer_sku&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;standard&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;outbound_type&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;userDefinedRouting&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;service_cidr&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;192.168.254.0/24&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;dns_service_ip&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;192.168.254.10&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;docker_bridge_cidr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;172.22.0.1/16&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The deployment uses the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;provider.tf&lt;/code&gt; for the authentication to the Azure Platform for the deployment of the resources as such with a block similar to the one below when using terraform open source or you will have a service principal already assigned in TFC/TFE on the workspace for the deployment. Please refer to &lt;a href=&quot;https://blog.johnalfaro.com/blog/TerraformCloud/#terraform-configuration&quot;&gt;Terraform Configuration&lt;/a&gt;&lt;/p&gt;
+
+&lt;!-- ![image-center](/assets/images/Blog/2020-09-03/hub-spoke.jpg){: .align-center} --&gt;
+&lt;h2 id=&quot;aks-the-bicep-way-&quot;&gt;AKS the Bicep way 🦾&lt;/h2&gt;
+&lt;p&gt;Azure Bicep did not disappoint and by using, the VSCode extension intellisense I was able to write the module in a few minutes in a similar fashion to my Terraform Module, still not as robust as terraform but I guess it is early stages for Bicep. The file structure is quite similar except here at this stage I cannot have my variables/parameters and outputs on separate files. In addition, I do not need the provider file, as this is ARM after all so the context used (user/SPN/identity) will be used for the deployment.&lt;/p&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;AKS&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Deployment&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;bicep&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AKS&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Module&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;bicep&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Network&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Module&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vnet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;bicep&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Route&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Table&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Module&lt;/span&gt;
+                &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;routetable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;bicep&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;aks.bicep&lt;/code&gt; file of the AKS module looks like below with all the values to be provided by populating the variables. 👇&lt;/p&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;param&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resourceGroup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;location&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;param&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AKSName&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;param&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;subnet_id&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;param&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;group_id&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;param&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dns_prefix&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;param&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kubernetes_version&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;param&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node_count&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;int&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;param&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;auto_scaling_min_count&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;int&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;param&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;auto_scaling_max_count&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;int&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;param&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_pods&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;int&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;param&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os_disk_size_gb&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;int&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;param&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node_size&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aks&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Microsoft.ContainerService/managedClusters@2021-02-01'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;AKSName&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;location: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;location&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;properties: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;kubernetesVersion: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kubernetes_version&lt;/span&gt; 
+    &lt;span class=&quot;ss&quot;&gt;enableRBAC: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;dnsPrefix: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dns_prefix&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;aadProfile: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;managed: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;adminGroupObjectIDs: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;group_id&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;networkProfile: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;networkPlugin: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'azure'&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;networkPolicy: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'azure'&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;serviceCidr: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'192.168.254.0/24'&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;dnsServiceIP: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'192.168.254.10'&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;dockerBridgeCidr: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'172.22.0.1/16'&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;outboundType: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'userDefinedRouting'&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;apiServerAccessProfile: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;enablePrivateCluster: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;addonProfiles: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;azurepolicy: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;enabled: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;httpApplicationRouting: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;enabled: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;agentPoolProfiles: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'agentpool'&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:'System'&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;osDiskSizeGB: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os_disk_size_gb&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;count: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node_count&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;vmSize: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node_size&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;osType: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Linux'&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;type: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'VirtualMachineScaleSets'&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;maxPods: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_pods&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;vnetSubnetID: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subnet_id&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;enableAutoScaling: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;minCount: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;auto_scaling_min_count&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;maxCount: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;auto_scaling_max_count&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;orchestratorVersion: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kubernetes_version&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;availabilityZones: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+          &lt;span class=&quot;s1&quot;&gt;'1'&lt;/span&gt;
+          &lt;span class=&quot;s1&quot;&gt;'2'&lt;/span&gt;
+          &lt;span class=&quot;s1&quot;&gt;'3'&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;identity: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;type: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'SystemAssigned'&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aks&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aks_id&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;privateFQDN&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aks_identity&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;object&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;identityProfile&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Definitely much nicer and easier to digest than an ARM in JSON format and quite similar to the terraform language layout at the end of the day same API calls 💪.&lt;/p&gt;
+&lt;h2 id=&quot;module-structure-using-bicep&quot;&gt;Module Structure using Bicep&lt;/h2&gt;
+&lt;p&gt;Modules are called using the following syntax quite similar to terraform module blocks and supports &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;depends on&lt;/code&gt; which was something introduced in terraform world from v13. However, versioning is not supported at this time as well as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;module_path&amp;gt;&lt;/code&gt; it’s only local not providing enough flexibility and governance around module creation for reusability.&lt;/p&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'&amp;lt;module_path&amp;gt;'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;required&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nested&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deployment&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;scope: &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subscription&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Input&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Parameters&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parameter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parameter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;dependsOn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;solution-deployment-bicep-way&quot;&gt;Solution Deployment Bicep Way&lt;/h2&gt;
+&lt;p&gt;In order to deploy the whole solution. I setup a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;main.bicep&lt;/code&gt; which makes the calls to the modules for the deployment based on variables and parameters required for each of them. The file will look like below. Given I am deploying the Resource Group to logically group my resources my deployment requires to be scoped to my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;subscription&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;targetScope&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'subscription'&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;param&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'australia east'&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;RgName&lt;/span&gt;          &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'aks-rg-test'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AKSName&lt;/span&gt;         &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'aks-development'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AKSvNetName&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'aks-vnet'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AKSsubnetName&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'aks-subnet'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AKSsubnetPrefix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'10.0.3.0/25'&lt;/span&gt;
+
+&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Resource&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;group&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rg&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Microsoft.Resources/resourceGroups@2020-06-01'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;RgName&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;location: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;location&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;vnet&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'./vnet.bicep'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;AKSvNetName&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;scope: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resourceGroup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;params: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;location: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;location&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;vNetName: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;AKSvNetName&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;address_space: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'10.0.3.0/24'&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;SubnetName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;AKSsubnetName&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;subnetPrefix: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;AKSsubnetPrefix&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;dependsOn: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;rg&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;aks&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'./aks.bicep'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;AKSName&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;scope: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resourceGroup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;params: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;location: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;location&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;subnet_id: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vnet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;subnetid&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;group_id: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'bad1b814-cb6e-4027-afd2-ee0d27aef0e1'&lt;/span&gt;
+    &lt;span class=&quot;no&quot;&gt;AKSName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'aks-dev'&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;dns_prefix: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'dev'&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;kubernetes_version: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'1.18.14'&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;node_count: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;auto_scaling_min_count: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;auto_scaling_max_count: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;max_pods: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;os_disk_size_gb: &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;node_size: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Standard_D2_v3'&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;dependsOn: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;vnet&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vnetid&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vnet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;vnet_id&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aksid&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;aks_id&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aks_iden&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;object&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;aks_identity&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;For the deployment I used Azure CLI and the deployment was just by running the below command. Where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;c&lt;/code&gt; short name for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--confirm-with-what-if&lt;/code&gt; gives me a sense of a dry run similar to our &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;terraform plan&lt;/code&gt;. We can get a JSON representation of a terraform plan like but I guess it will be a bit harder to inspect.&lt;/p&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;az&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deployment&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sub&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aksbicep&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;bicep&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'australiaeast'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;You can also have JSON representation for the changes by using the command below and you can potentially pipe the results so you can programmatically inspect those changes&lt;/p&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;az&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deployment&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sub&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;what&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pretty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aksbicep&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;template&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deployment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;bicep&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;location&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'australiaeast'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2021-04-02/module.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p class=&quot;notice--warning&quot;&gt;&lt;strong&gt;Important&lt;/strong&gt; I run this exercise using my account context with currently has a contributor role assignment. In enterprise scenarios, you will have a more comprehensive RBAC controls and potentially using CI/CD tools that will run under Service Principals or Manage Identities.&lt;/p&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+&lt;p&gt;I really found Bicep so much better to deal with than ARM templates so if you are on an environment using ARM templates for all your deployments, Bicep will be a really good option to explore and the best of all is that you can get the latest released features so you will not have to wait for a release to start enjoying those new features. Still Bicep needs to mature a bit more to offer more flexibility but you can start getting the benefits already. Modules is something I hope it gets enhanced as this will definitely increase code reusability and will increase authoring time as you will remove copy/paste for different solution deployments&lt;/p&gt;
+
+&lt;p&gt;On the other hand If you are already using terraform you will be already enjoying a more mature product that is cloud agnostic in regards to its language. I will assume Bicep team will be making good efforts and make those awesome capabilities from Terraform available in Bicep. Project Bicep still will be native to Azure so it will not be a language you can use on other clouds.&lt;/p&gt;
+
+&lt;p&gt;If you are keen I found some motivation on the below great videos.👇&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/wkQIyenVfxc&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/exk1QIRwAhU&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;I hope it was informative, hasta la vista and keep working out those 🦾!!!&lt;/p&gt;
+
+&lt;h2 id=&quot;code-download&quot;&gt;Code Download&lt;/h2&gt;
+&lt;p&gt;The code I created for this demo is available in my blog repository &lt;a href=&quot;https://github.com/cerocool1203/blog/tree/main/bicep&quot;&gt;Github&lt;/a&gt;.&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Project Bicep" /><category term="Azure CLI" /><category term="Azure" /><category term="Terraform" /><summary type="html">This article is demostrate the deployment of Private AKS using Bicep compared to Terraform</summary></entry><entry><title type="html">Terraform Cloud - Test Drive Series</title><link href="http://localhost:4000/blog/TerraformCloud/" rel="alternate" type="text/html" title="Terraform Cloud - Test Drive Series" /><published>2020-09-08T00:00:00+00:00</published><updated>2020-09-08T00:00:00+00:00</updated><id>http://localhost:4000/blog/TerraformCloud</id><content type="html" xml:base="http://localhost:4000/blog/TerraformCloud/">&lt;p&gt;I have been deploying my infrastructure using Terraform Open Source. However, given you can use &lt;a href=&quot;https://www.hashicorp.com/products/terraform/pricing/&quot;&gt;Terraform Cloud for free&lt;/a&gt; you get some features like create and provision infrastructure as well as collaboration which you can do it up to 5 people… which is perfect for what I wanted to achieve. In addition, you get a Terraform Module Registry where you can store and consume modules.&lt;/p&gt;
 
 &lt;h2 id=&quot;account-creation&quot;&gt;Account Creation&lt;/h2&gt;
 
@@ -73,7 +361,7 @@
 &lt;p&gt;After doing all of this we are ready to start planning and applying our Azure infrastructure in this case. Given this is my sandpit environment I did not migrate my state file to Terraform Cloud instead I did start from scratch.&lt;/p&gt;
 
 &lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
-&lt;p&gt;This was just an overview of my journey from Terraform Open Source to Terraform Cloud. I will continue on digging and exploring a bit more into some of the benefits you get by using Terraform Cloud for small teams. I have signed for a free trial to explore some of the cool features like cost estimation, sentinel Policies and of course RBAC. I hope this has been informative and helpful⚔&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Azure" /><summary type="html">This article provides an idea on how to leverage Terraform Cloud to deploy your Infrastructure as code in Azure</summary></entry><entry><title type="html">Terraform 13 - for_each - Test Drive</title><link href="http://localhost:4000/blog/T13-for_each/" rel="alternate" type="text/html" title="Terraform 13 - for_each - Test Drive" /><published>2020-08-26T00:00:00+00:00</published><updated>2020-08-26T00:00:00+00:00</updated><id>http://localhost:4000/blog/T13-for_each</id><content type="html" xml:base="http://localhost:4000/blog/T13-for_each/">&lt;p&gt;🚀Terraform 0.13 is the new trend in the Terraform world IaC and one of the new features is the most wanted for_each🚀.&lt;/p&gt;
+&lt;p&gt;This was just an overview of my journey from Terraform Open Source to Terraform Cloud. I will continue on digging and exploring a bit more into some of the benefits you get by using Terraform Cloud for small teams. I have signed for a free trial to explore some of the cool features like cost estimation, sentinel Policies and of course RBAC. I hope this has been informative and helpful⚔&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Azure" /><summary type="html">This article provides an idea on how to leverage Terraform Cloud to deploy your Infrastructure as code in Azure</summary></entry><entry><title type="html">Terraform 13 - for_each - Test Drive</title><link href="http://localhost:4000/blog/T13-for_each/" rel="alternate" type="text/html" title="Terraform 13 - for_each - Test Drive" /><published>2020-08-26T00:00:00+00:00</published><updated>2020-08-26T00:00:00+00:00</updated><id>http://localhost:4000/blog/T13-for_each</id><content type="html" xml:base="http://localhost:4000/blog/T13-for_each/">&lt;p&gt;🚀Terraform 0.13 is the new trend in the Terraform world IaC and one of the new features is the most wanted for_each🚀.&lt;/p&gt;
 
 &lt;p&gt;I have all my Azure infrastructure currently deployed using Terraform 12. Given we already got v13 which judging for the number indicates it maybe unlucky, but 2020 cannot be beaten with the unlucky connotation😂&lt;/p&gt;
 
@@ -181,7 +469,7 @@ Some inspection was required and start doing the needfuls(got this word in my he
 &lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2020-08-29/apply_TerraformCloud.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
-&lt;p&gt;Terraform v13 is offering quite good new features that if you have been working with terraform for a while you were willing to have. Ovbiusly, the process for migrating current infrastructure to v13 is not quite straightforward. However, in the end this will be making your code management easier. I will be modifying my current code to leverage all the v13 features so I hope I can keep sharing my small progresses. I hope this helps someone, Hasta la vista!!!&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Terraform 13" /><category term="Azure" /><summary type="html">This article demonstrates how to use for_each in the Module-centric workflows</summary></entry><entry><title type="html">Terraform API using PowerShell - Workspace Information</title><link href="http://localhost:4000/blog/TFC/" rel="alternate" type="text/html" title="Terraform API using PowerShell - Workspace Information" /><published>2020-08-05T00:00:00+00:00</published><updated>2020-08-05T00:00:00+00:00</updated><id>http://localhost:4000/blog/TFC</id><content type="html" xml:base="http://localhost:4000/blog/TFC/">&lt;p&gt;🚀Hello there, This is my first post and I hope it helps someone and remember constructive feedback is always welcome🚀.&lt;/p&gt;
+&lt;p&gt;Terraform v13 is offering quite good new features that if you have been working with terraform for a while you were willing to have. Ovbiusly, the process for migrating current infrastructure to v13 is not quite straightforward. However, in the end this will be making your code management easier. I will be modifying my current code to leverage all the v13 features so I hope I can keep sharing my small progresses. I hope this helps someone, Hasta la vista!!!&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Terraform 13" /><category term="Azure" /><summary type="html">This article demonstrates how to use for_each in the Module-centric workflows</summary></entry><entry><title type="html">Terraform API using PowerShell - Workspace Information</title><link href="http://localhost:4000/blog/TFC/" rel="alternate" type="text/html" title="Terraform API using PowerShell - Workspace Information" /><published>2020-08-05T00:00:00+00:00</published><updated>2020-08-05T00:00:00+00:00</updated><id>http://localhost:4000/blog/TFC</id><content type="html" xml:base="http://localhost:4000/blog/TFC/">&lt;p&gt;🚀Hello there, This is my first post and I hope it helps someone and remember constructive feedback is always welcome🚀.&lt;/p&gt;
 
 &lt;p&gt;I have been working on getting on getting Workspace information in Terraform Enterprise/Cloud. I manage a large number of workspaces and Terraform Cloud/ Enterprise does not show the terraform version of your managed workspaces and some other info that can be useful to make decisions. Terraform Enterprise gives you an idea of how many workspaces are running on which version but not individually. However, TFC does not …at least on the free version.&lt;/p&gt;
 
@@ -296,4 +584,4 @@ Some inspection was required and start doing the needfuls(got this word in my he
 &lt;p&gt;The script definitely can be more robust and improved but this is just the beginning of the amount of actions that you can automate on different scenarios. For example, triggering the run from an Azure DevOps pipeline as part of full CI/CD deployment where TFE/TFC is your backend for your state file. Reporting can be useful too as you generate reports and/or dashboards to get more insights of your Terraform consumption products&lt;/p&gt;
 
 &lt;h2 id=&quot;code-download&quot;&gt;Code Download&lt;/h2&gt;
-&lt;p&gt;The code is available &lt;a href=&quot;https://github.com/cerocool1203/PowerShell/blob/master/TFC_Workspace_Status.ps1&quot;&gt;on Github&lt;/a&gt; on the  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PowerShell&lt;/code&gt; repository.&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Powershell" /><summary type="html">This article demonstrates how to use PowerShell to interact with Terraform Cloud/Enterprise API</summary></entry></feed>
+&lt;p&gt;The code is available &lt;a href=&quot;https://github.com/cerocool1203/PowerShell/blob/master/TFC_Workspace_Status.ps1&quot;&gt;on Github&lt;/a&gt; on the  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PowerShell&lt;/code&gt; repository.&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Powershell" /><summary type="html">This article demonstrates how to use PowerShell to interact with Terraform Cloud/Enterprise API</summary></entry></feed>

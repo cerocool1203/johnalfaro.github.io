@@ -16,4 +16,10 @@ var store = [{
         "tags": ["Terraform Cloud","Terraform Enterprise","Azure"],
         "url": "http://localhost:4000/blog/TerraformCloud/",
         "teaser": "http://localhost:4000/"
+      },{
+        "title": "Deploying AKS using Bicep, because ARM is not strong enough :🦾!!!",
+        "excerpt":"Project Bicep is taking ARM to the next level and it is making lots of good noise in the IaC world. I have been using terraform for a while so I decided to check it out and see how it compares to HCL language to deploy IaC in Azure Platform...","categories": ["Blog"],
+        "tags": ["Project Bicep","Azure CLI","Azure","Terraform"],
+        "url": "http://localhost:4000/blog/Bicep/",
+        "teaser": "http://localhost:4000/"
       }]
