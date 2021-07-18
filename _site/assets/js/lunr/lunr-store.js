@@ -17,9 +17,15 @@ var store = [{
         "url": "http://localhost:4000/blog/TerraformCloud/",
         "teaser": "http://localhost:4000/"
       },{
-        "title": "Deploying AKS using Bicep, because ARM is not strong enough :🦾!!!",
+        "title": "Deploying Private AKS using Bicep, because ARM is not strong enough :🦾!!!",
         "excerpt":"Project Bicep is taking ARM to the next level and it is making lots of good noise in the IaC world. I have been using terraform for a while so I decided to check it out and see how it compares to HCL language to deploy IaC in Azure Platform...","categories": ["Blog"],
         "tags": ["Project Bicep","Azure CLI","Azure","Terraform"],
         "url": "http://localhost:4000/blog/Bicep/",
+        "teaser": "http://localhost:4000/"
+      },{
+        "title": "A continuous Deployment Recipe consuming Azure DevOps 👉 PowerShell 👉 Terraform Cloud(API-driven Run Workflow)",
+        "excerpt":"I have been working with Terraform Cloud/Enterprise using the Version Control System VCS which is good but to my opinion does not provide enough flexibility when you want to have a proper Continuous Deployment flow where you are not just deploying Infrastructure, but you are covering the cycle from Continuous...","categories": ["Blog"],
+        "tags": ["Azure Web App","PowerShell","Azure DevOps","Terraform Cloud"],
+        "url": "http://localhost:4000/blog/CICD/",
         "teaser": "http://localhost:4000/"
       }]
