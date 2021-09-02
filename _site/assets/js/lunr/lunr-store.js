@@ -28,4 +28,10 @@ var store = [{
         "tags": ["Azure Web App","PowerShell","Azure DevOps","Terraform Cloud"],
         "url": "/blog/CICD/",
         "teaser": ""
+      },{
+        "title": "Continuous Deployment Recipe using GitHub Actions, Checkov and Terraform Cloud(CLI)",
+        "excerpt":"In my last article I was working with a CI/CD pipeline using Azure Pipelines. This time I wanted to use the same approach but using GitHub Actions which lately is the new trend and also it is known that Microsoft is investing a bit more around this product. I must...","categories": ["Blog"],
+        "tags": ["Azure Web App","GitHub Actions","Terraform Cloud","Checkov"],
+        "url": "/blog/GH_CICD/",
+        "teaser": "/assets/images/Blog/2021-09-01/GH_Actions.jpg"
       }]

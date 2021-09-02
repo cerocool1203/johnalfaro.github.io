@@ -1,4 +1,245 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-08-25T14:13:09+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Cloud Journey</title><subtitle>a bit of everything around cloud specially around Azure.</subtitle><author><name>John Alfaro</name></author><entry><title type="html">A continuous Deployment Recipe consuming Azure DevOps 👉 PowerShell 👉 Terraform Cloud(API-driven Run Workflow)</title><link href="http://localhost:4000/blog/CICD/" rel="alternate" type="text/html" title="A continuous Deployment Recipe consuming Azure DevOps 👉 PowerShell 👉 Terraform Cloud(API-driven Run Workflow)" /><published>2021-07-18T00:00:00+00:00</published><updated>2021-07-18T00:00:00+00:00</updated><id>http://localhost:4000/blog/CICD</id><content type="html" xml:base="http://localhost:4000/blog/CICD/">&lt;p&gt;I have been working with Terraform Cloud/Enterprise using the Version Control System &lt;a href=&quot;https://www.terraform.io/docs/cloud/workspaces/vcs.html&quot;&gt;VCS&lt;/a&gt; which is good but to my opinion does not provide enough flexibility when you want to have a proper Continuous Deployment flow where you are not just deploying Infrastructure, but you are covering the cycle from Continuous Integration and ending with a Release of verified artefacts/packages or even container images. &lt;a href=&quot;https://docs.microsoft.com/en-us/devops/deliver/what-is-continuous-delivery&quot;&gt;Continuous Deployment&lt;/a&gt; guarantee that qualified releases are automatically deployed to Production.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-09-02T12:49:10+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Cloud Journey</title><subtitle>a bit of everything around cloud specially around Azure.</subtitle><author><name>John Alfaro</name></author><entry><title type="html">Continuous Deployment Recipe using GitHub Actions, Checkov and Terraform Cloud(CLI)</title><link href="http://localhost:4000/blog/GH_CICD/" rel="alternate" type="text/html" title="Continuous Deployment Recipe using GitHub Actions, Checkov and Terraform Cloud(CLI)" /><published>2021-09-01T00:00:00+00:00</published><updated>2021-09-01T00:00:00+00:00</updated><id>http://localhost:4000/blog/GH_CICD</id><content type="html" xml:base="http://localhost:4000/blog/GH_CICD/">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In my last article I was working with a CI/CD pipeline using &lt;a href=&quot;https://blog.johnalfaro.com/blog/CICD/&quot;&gt;Azure Pipelines&lt;/a&gt;. This time I wanted to use the same approach but using &lt;a href=&quot;https://docs.github.com/en/actions&quot;&gt;GitHub Actions&lt;/a&gt; which lately is the new trend and also it is known that Microsoft is investing a bit more around this product. I must say I was impressed on how fast I was a able to test it out.&lt;/p&gt;
+
+&lt;p&gt;I wanted to Test-Drive this model by using the Terraform Cloud &lt;a href=&quot;https://www.terraform.io/docs/cloud/run/cli.html&quot;&gt;CLI-driven Run Workflow&lt;/a&gt; instead of the API-driven Run Workflow for a change. Also, I have introduced some Static Code analysis using &lt;a href=&quot;https://www.checkov.io/&quot;&gt;Checkov&lt;/a&gt;. Checkov is a static code analysis tool for scanning infrastructure as code (IaC) files for misconfigurations that may lead to security or compliance problems, so I was able to plug that in into my workflow as it has a Github Action too.
+&lt;img src=&quot;/assets\images\Blog\2021-09-01\GH_Actions.jpg&quot; alt=&quot;drawing&quot; style=&quot;width:2600px;&quot; /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;environment-preparation&quot;&gt;Environment preparation&lt;/h2&gt;
+&lt;p&gt;What do I need to get started?&lt;/p&gt;
+
+&lt;h3 id=&quot;terraform-cloud&quot;&gt;Terraform Cloud&lt;/h3&gt;
+&lt;p&gt;You need a Terraform Cloud Instance &lt;a href=&quot;https://www.hashicorp.com/products/terraform/pricing&quot;&gt;Free plan&lt;/a&gt; up to 5 users and you can leverage the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Private Module registry&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Remote State Storage&lt;/code&gt;.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Create a workspace using the CLI workflow and assign the required variables to authenticate to the Azure Platform
+&lt;img src=&quot;/assets\images\Blog\2021-09-01\tfcenv.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Generate a token that will be used by GitHub to authenticate to TFC and trigger the workspace for the Infrastructure as Code to be deployed
+&lt;img src=&quot;/assets\images\Blog\2021-09-01\tokentfc.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;github-repository&quot;&gt;GitHub Repository&lt;/h3&gt;
+&lt;p&gt;Create a new Github Repo.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Go to your GitHub profile then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;settings&lt;/code&gt; then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;developer settings&lt;/code&gt; then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;personal access tokens&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Generate a GitHub token. This is to be used for commenting the PR’s for review 
+&lt;img src=&quot;/assets\images\Blog\2021-09-01\ghtoken.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Go to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Settings&lt;/code&gt; then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Secrets&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Create a new secret named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;TFC_TOKEN&lt;/code&gt; and paste the TFC token value generated.&lt;/li&gt;
+      &lt;li&gt;Create a secret called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AZURE_CREDENTIALS&lt;/code&gt;. This is for the Web App deployment. Make sure you set the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JSON&lt;/code&gt; format properly as you may get some errors. It should look like this.
+        &lt;pre&gt;&lt;code class=&quot;language-JSON&quot;&gt;{
+    &quot;clientId&quot;: &quot;&amp;lt;GUID&amp;gt;&quot;,
+    &quot;clientSecret&quot;: &quot;&amp;lt;GUID&amp;gt;&quot;,
+    &quot;subscriptionId&quot;: &quot;&amp;lt;GUID&amp;gt;&quot;,
+    &quot;tenantId&quot;: &quot;&amp;lt;GUID&amp;gt;&quot;,
+}
+&lt;/code&gt;&lt;/pre&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;🤜Looks like we got everything required regarding Authentication &amp;amp; Authorization🤛
+&lt;img src=&quot;/assets\images\Blog\2021-09-01\secrets.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Important&lt;/strong&gt; Always keep security in mind and use credentials with less privileged access.&lt;/p&gt;
+
+&lt;p&gt;My repo is organized like this to make simple&lt;/p&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nc&quot;&gt;Web&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;App&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Repo&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;workflows&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_terraform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;yml&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;        
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Terraform&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;variables&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;backend&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;provider&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;        
+        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;
+            &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Application&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Source&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Code&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;deployment-process&quot;&gt;Deployment Process&lt;/h2&gt;
+&lt;p&gt;I have created a workflow with three GitHub Actions which actually were already available for its consumptionn in the &lt;a href=&quot;https://github.com/marketplace&quot;&gt;GitHub Actions Marketplace&lt;/a&gt; one for the &lt;a href=&quot;https://github.com/marketplace/actions/hashicorp-setup-terraform&quot;&gt;infrastructure Deployment&lt;/a&gt;, one for &lt;a href=&quot;https://github.com/marketplace/actions/checkov-github-action&quot;&gt;Static Code Analysis&lt;/a&gt; and one for the &lt;a href=&quot;https://github.com/marketplace/actions/azure-webapp&quot;&gt;Web App&lt;/a&gt; code deployment. A difference to my article using AZDO, this time I am creating a Pull Request to do some validation in my terraform files prior applying the configuration.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;After code has been committed a Pull Request will be created, consequently a validation process will kick off. All results will be directly available in the Pull Request instead of opening the GitHub Action or the Terraform Cloud workspace. However, on the time I played with I could not get Checkov’s output to be advertised in the PR comments. I think if using the commands directly and installing the binary it will be more flexible ಥ_ಥ.
+    &lt;ul&gt;
+      &lt;li&gt;Terraform format: checks whether the configuration has been properly formatted&lt;/li&gt;
+      &lt;li&gt;Terraform Validate: validates the configuration used in the GitHub action workflow.&lt;/li&gt;
+      &lt;li&gt;Terraform plan: generates a Terraform plan in the Terraform Cloud workspace&lt;/li&gt;
+      &lt;li&gt;Static Security Code Analysis: Potential compliance/misconfiguration
+&lt;img src=&quot;/assets\images\Blog\2021-09-01\pr.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;static-security-code-analysis-with-checkov&quot;&gt;Static Security Code Analysis with Checkov&lt;/h3&gt;
+&lt;p&gt;Interestingly enough, and after a few rounds I had to set this variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;soft_fail: true&lt;/code&gt; as it does not seem to be a way to select the policies that are important for your environment OOB. However, I found there are more policies for compliance than tfsec for my specific case. The policies as you can see below are good. However, some of them could potentially be false positives and/or not required depending on your environment. Still this is great tool and I think I will be exploring deeper into this project.&lt;/p&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Run&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Checkov&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;id: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;checkov&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;uses: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bridgecrewio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;checkov&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;vi&quot;&gt;@master&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;with:
+        directory: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;terraform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;
+        &lt;span class=&quot;ss&quot;&gt;soft_fail: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets\images\Blog\2021-09-01\PR_Checks.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;When merging the PR, it will trigger the deployment of the Infrastructure and the Web App deployment (I know I didn’t do any validation on the web app code ☜(ﾟヮﾟ☜))… and the final result is a deployed Web App in about ~10 mins.
+&lt;img src=&quot;/assets\images\Blog\2021-09-01\end.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;github-workflow&quot;&gt;GitHub Workflow&lt;/h2&gt;
+&lt;p&gt;The GitHub workflow in this case is distributed in one job with different multiple steps that will run based on the branch and github event.
+&lt;img src=&quot;/assets\images\Blog\2021-09-01\workflow.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;infrastructure-as-code-deployment-stage&quot;&gt;Infrastructure as Code Deployment Stage&lt;/h2&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;jobs&lt;/span&gt;
+  &lt;span class=&quot;ss&quot;&gt;terraform:
+    name: &lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Terraform'&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;runs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;on: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ubuntu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;latest&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest&lt;/span&gt;
+    &lt;span class=&quot;ss&quot;&gt;defaults:
+      run:
+        shell: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bash&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;working&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;directory: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;terraform&lt;/span&gt;
+
+    &lt;span class=&quot;ss&quot;&gt;steps:
+    &lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# Checkout the repository to the GitHub Actions runner&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Checkout&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;uses: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;checkout&lt;/span&gt;&lt;span class=&quot;vi&quot;&gt;@v2&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Setup&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Terraform&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;uses: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hashicorp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;terraform&lt;/span&gt;&lt;span class=&quot;vi&quot;&gt;@v1&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;with:
+        cli_config_credentials_token: &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Checks that all Terraform configuration files adhere to a canonical format&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Terraform&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Format&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;id: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;run: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;terraform&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;check&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Terraform&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Init&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;id: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;run: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;terraform&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;init&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Terraform&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Validate&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;id: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;validate&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;run: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;terraform&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;validate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Generates an execution plan for Terraform&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Terraform&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Plan&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;id: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plan&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;if: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;event_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'pull_request'&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;run: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;terraform&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plan&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;continue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;error: &lt;/span&gt;&lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;uses: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;actions&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;vi&quot;&gt;@v4&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;if: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;event_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'pull_request'&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;env:
+          &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;PLAN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;terraform&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;$&quot;&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;with:
+          &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;token: &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+          &lt;span class=&quot;ss&quot;&gt;script: &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`#### Terraform Format and Style 🖌&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;
+            #### Terraform Initialization ⚙️&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;
+            #### Terraform Validation 🤖&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;
+            #### Terraform Plan 📖&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;
+            #### Static Security Analysis 🕵️‍♀️&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;
+            
+            &amp;lt;details&amp;gt;&amp;lt;summary&amp;gt;Show Plan&amp;lt;/summary&amp;gt;
+
+            &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`\`\`\n&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;
+            ${process.env.PLAN}
+            &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`\`\`&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;
+
+            &amp;lt;/details&amp;gt;
+
+            *Pusher: @$, Action: &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;*`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+           
+            &lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;issues&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;createComment&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+              &lt;span class=&quot;ss&quot;&gt;issue_number: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;issue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;ss&quot;&gt;owner: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;repo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;owner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;ss&quot;&gt;repo: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;repo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;repo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+              &lt;span class=&quot;ss&quot;&gt;body: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Terraform&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Plan&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Status&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;if: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;plan&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;outcome&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'failure'&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;run: &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+
+      &lt;span class=&quot;c1&quot;&gt;# On push to main, build or change infrastructure according to Terraform configuration files&lt;/span&gt;
+      &lt;span class=&quot;c1&quot;&gt;# Note: It is recommended to set up a required &quot;strict&quot; status check in your repository for &quot;Terraform Cloud&quot;. See the documentation on &quot;strict&quot; required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;name: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Terraform&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Apply&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;if: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;ref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'refs/heads/main'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;event_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'push'&lt;/span&gt;
+      &lt;span class=&quot;ss&quot;&gt;run: &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;terraform&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apply&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;auto&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;approve&lt;/span&gt;   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;infrastructure-as-code-deployment-in-action&quot;&gt;Infrastructure as Code deployment in Action&lt;/h3&gt;
+&lt;p&gt;The below is a quick demo of the Github Actions and Terraform Cloud interaction triggered via CLI to successfully deploy the Infrastructure required with minimum effort&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets\images\Blog\2021-09-01\TFC_GH.gif&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;web-app-deployment&quot;&gt;Web App Deployment&lt;/h2&gt;
+&lt;p&gt;The below describes the steps required to build and deploy the code in the Azure Web App, This is basd on the github action OOB.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    - uses: azure/login@v1
+      if: github.ref == 'refs/heads/main' &amp;amp;&amp;amp; github.event_name == 'push'
+      with:
+        creds: $
+          
+    - name: Setup Node $
+      uses: actions/setup-node@v1
+      if: github.ref == 'refs/heads/main' &amp;amp;&amp;amp; github.event_name == 'push'
+      with:
+        node-version: $
+      
+    - name: 'npm install, build, and test'
+      if: github.ref == 'refs/heads/main' &amp;amp;&amp;amp; github.event_name == 'push'
+      run: |
+          npm install
+          npm run build
+                
+      # deploy web app using Azure credentials
+    - uses: azure/webapps-deploy@v2
+      if: github.ref == 'refs/heads/main' &amp;amp;&amp;amp; github.event_name == 'push'
+      with:
+        app-name: $
+        package: $
+
+      # Azure logout 
+    - name: logout
+      if: github.ref == 'refs/heads/main' &amp;amp;&amp;amp; github.event_name == 'push'
+      run: |
+          az logout
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
+
+&lt;p&gt;🤔My idea in this article was to share my first experience with GitHub Actions “translating” what I had for Azure DevOps and see the similarities and new opportunities that it may open. I really like that I was able to do all of this with not much effort, as there are many actions available in the Github Actions marketplace. I can see many new projects are invested in GitHub Actions to provide their product integrations. I also liked the speed to get GitHub runner compared to a Microsoft Hosted agent in AZDO&lt;/p&gt;
+
+&lt;p&gt;In regards to Checkov, I would love to have more flexibility on the policies as it may be hard to get one size to fit all. Still I have to dig a bit more but it can definitely a good tool to use for static code analysis. Terraform Sentinel can help with this, you still have to author all the policies and that could be tedious, especially if golang is not your cup of tea ☕. However, you have the flexibility. Checkov is Python based which for me can be easier to digest 👨‍💻,, so what is your preference??&lt;/p&gt;
+
+&lt;p&gt;Overall the experience was great with some small challenges but the documentation is good to get your head around it. Especially with the action gives you quite a good percentage of the heavy lifting 🦸‍♂️&lt;/p&gt;
+
+&lt;p&gt;I do hope this helps someone and that you find it informative,, so please let me know as constructive feedback is always important🕵️‍♂️,, That’s it for now,,, Hasta la vista🐱‍🏍!!!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Azure Web App" /><category term="GitHub Actions" /><category term="Terraform Cloud" /><category term="Checkov" /><summary type="html">This article is demostrating a deployment using GitHub Actions and leveraging Checkov for Security Code Analisys and Terraform Cloud CLI-driven Run Workflow for an Azure Web App</summary></entry><entry><title type="html">A continuous Deployment Recipe consuming Azure DevOps 👉 PowerShell 👉 Terraform Cloud(API-driven Run Workflow)</title><link href="http://localhost:4000/blog/CICD/" rel="alternate" type="text/html" title="A continuous Deployment Recipe consuming Azure DevOps 👉 PowerShell 👉 Terraform Cloud(API-driven Run Workflow)" /><published>2021-07-18T00:00:00+00:00</published><updated>2021-07-18T00:00:00+00:00</updated><id>http://localhost:4000/blog/CICD</id><content type="html" xml:base="http://localhost:4000/blog/CICD/">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I have been working with Terraform Cloud/Enterprise using the Version Control System &lt;a href=&quot;https://www.terraform.io/docs/cloud/workspaces/vcs.html&quot;&gt;VCS&lt;/a&gt; which is good but to my opinion does not provide enough flexibility when you want to have a proper Continuous Deployment flow where you are not just deploying Infrastructure, but you are covering the cycle from Continuous Integration and ending with a Release of verified artefacts/packages or even container images. &lt;a href=&quot;https://docs.microsoft.com/en-us/devops/deliver/what-is-continuous-delivery&quot;&gt;Continuous Deployment&lt;/a&gt; guarantee that qualified releases are automatically deployed to Production.&lt;/p&gt;
 
 &lt;p&gt;So I wanted to Test-Drive this model by using the Terraform Cloud &lt;a href=&quot;https://www.terraform.io/docs/cloud/run/api.html&quot;&gt;API-driven Run Workflow&lt;/a&gt; by not associating a workspace to a VCS repo, instead using Azure DevOps Pipeline to decide when a configuration should be changed and when runs should occur.&lt;/p&gt;
 &lt;h2 id=&quot;environment-preparation&quot;&gt;Environment preparation&lt;/h2&gt;
@@ -7,7 +248,7 @@
 &lt;ol&gt;
   &lt;li&gt;Azure DevOps Project, you can use the &lt;a href=&quot;https://azure.microsoft.com/en-au/pricing/details/devops/azure-devops-services/&quot;&gt;Free Tier&lt;/a&gt;.&lt;/li&gt;
   &lt;li&gt;Terraform Cloud Instance &lt;a href=&quot;https://www.hashicorp.com/products/terraform/pricing&quot;&gt;Free plan&lt;/a&gt; up to 5 users and you can leverage the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Private Module registry&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Remote State Storage&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Some code to deploy to the Web App, here I amm deploying a Gatsby Site that can be found on the Microsoft learn modules.&lt;/li&gt;
+  &lt;li&gt;Some code to deploy to the Web App, here I am deploying a Gatsby Site that can be found on the Microsoft learn modules.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;My repo is organized like this to make simple&lt;/p&gt;
@@ -304,9 +545,11 @@
 
 &lt;p&gt;I do hope this helps someone and that you find it informative,, so please let me know as constructive feedback is always important🕵️‍♂️,, That’s it for now,,, Hasta la vista🐱‍🏍!!!&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoy this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Azure Web App" /><category term="PowerShell" /><category term="Azure DevOps" /><category term="Terraform Cloud" /><summary type="html">This article is demostrating a deployment using Azure DevOps and Terraform Cloud API-driven Run Workflow with a pinch of PowerShell magic for an Azure Web App</summary></entry><entry><title type="html">Deploying Private AKS using Bicep, because ARM is not strong enough :🦾!!!</title><link href="http://localhost:4000/blog/Bicep/" rel="alternate" type="text/html" title="Deploying Private AKS using Bicep, because ARM is not strong enough :🦾!!!" /><published>2021-04-04T00:00:00+00:00</published><updated>2021-04-04T00:00:00+00:00</updated><id>http://localhost:4000/blog/Bicep</id><content type="html" xml:base="http://localhost:4000/blog/Bicep/">&lt;p&gt;&lt;a href=&quot;https://github.com/Azure/bicep&quot;&gt;Project Bicep&lt;/a&gt; is taking ARM to the next level and it is making lots of good noise in the IaC  world. I have been using terraform for a while so I decided to check it out and see how it compares to HCL language to deploy IaC in Azure Platform and also to see how easy it is to author these kind of templates.  :astonished:
+&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Azure Web App" /><category term="PowerShell" /><category term="Azure DevOps" /><category term="Terraform Cloud" /><summary type="html">This article is demostrating a deployment using Azure DevOps and Terraform Cloud API-driven Run Workflow with a pinch of PowerShell magic for an Azure Web App</summary></entry><entry><title type="html">Deploying Private AKS using Bicep, because ARM is not strong enough :🦾!!!</title><link href="http://localhost:4000/blog/Bicep/" rel="alternate" type="text/html" title="Deploying Private AKS using Bicep, because ARM is not strong enough :🦾!!!" /><published>2021-04-04T00:00:00+00:00</published><updated>2021-04-04T00:00:00+00:00</updated><id>http://localhost:4000/blog/Bicep</id><content type="html" xml:base="http://localhost:4000/blog/Bicep/">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/Azure/bicep&quot;&gt;Project Bicep&lt;/a&gt; is taking ARM to the next level and it is making lots of good noise in the IaC  world. I have been using terraform for a while so I decided to check it out and see how it compares to HCL language to deploy IaC in Azure Platform and also to see how easy it is to author these kind of templates.  :astonished:
 Given that now Bicep support the creation of modules it makes it even more appealing, still early stages but looking forward to feature parity to terraform&lt;/p&gt;
 
 &lt;h2 id=&quot;environment-preparation-for-bicep&quot;&gt;Environment preparation for Bicep&lt;/h2&gt;
@@ -596,9 +839,11 @@ Given that now Bicep support the creation of modules it makes it even more appea
 &lt;h2 id=&quot;code-download&quot;&gt;Code Download&lt;/h2&gt;
 &lt;p&gt;The code I created for this demo is available in my blog repository &lt;a href=&quot;https://github.com/cerocool1203/blog/tree/main/bicep&quot;&gt;Github&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoy this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Project Bicep" /><category term="Azure CLI" /><category term="Azure" /><category term="Terraform" /><summary type="html">This article is demostrating the deployment of Private AKS using Bicep compared to Terraform</summary></entry><entry><title type="html">Terraform Cloud - Test Drive Series</title><link href="http://localhost:4000/blog/TerraformCloud/" rel="alternate" type="text/html" title="Terraform Cloud - Test Drive Series" /><published>2020-09-08T00:00:00+00:00</published><updated>2020-09-08T00:00:00+00:00</updated><id>http://localhost:4000/blog/TerraformCloud</id><content type="html" xml:base="http://localhost:4000/blog/TerraformCloud/">&lt;p&gt;I have been deploying my infrastructure using Terraform Open Source. However, given you can use &lt;a href=&quot;https://www.hashicorp.com/products/terraform/pricing/&quot;&gt;Terraform Cloud for free&lt;/a&gt; you get some features like create and provision infrastructure as well as collaboration which you can do it up to 5 people… which is perfect for what I wanted to achieve. In addition, you get a Terraform Module Registry where you can store and consume modules.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Project Bicep" /><category term="Azure CLI" /><category term="Azure" /><category term="Terraform" /><summary type="html">This article is demostrating the deployment of Private AKS using Bicep compared to Terraform</summary></entry><entry><title type="html">Terraform Cloud - Test Drive Series</title><link href="http://localhost:4000/blog/TerraformCloud/" rel="alternate" type="text/html" title="Terraform Cloud - Test Drive Series" /><published>2020-09-08T00:00:00+00:00</published><updated>2020-09-08T00:00:00+00:00</updated><id>http://localhost:4000/blog/TerraformCloud</id><content type="html" xml:base="http://localhost:4000/blog/TerraformCloud/">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I have been deploying my infrastructure using Terraform Open Source. However, given you can use &lt;a href=&quot;https://www.hashicorp.com/products/terraform/pricing/&quot;&gt;Terraform Cloud for free&lt;/a&gt; you get some features like create and provision infrastructure as well as collaboration which you can do it up to 5 people… which is perfect for what I wanted to achieve. In addition, you get a Terraform Module Registry where you can store and consume modules.&lt;/p&gt;
 
 &lt;h2 id=&quot;account-creation&quot;&gt;Account Creation&lt;/h2&gt;
 
@@ -675,9 +920,11 @@ Given that now Bicep support the creation of modules it makes it even more appea
 &lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
 &lt;p&gt;This was just an overview of my journey from Terraform Open Source to Terraform Cloud. I will continue on digging and exploring a bit more into some of the benefits you get by using Terraform Cloud for small teams. I have signed for a free trial to explore some of the cool features like cost estimation, sentinel Policies and of course RBAC. I hope this has been informative and helpful⚔&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoy this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Azure" /><summary type="html">This article provides an idea on how to leverage Terraform Cloud to deploy your Infrastructure as code in Azure</summary></entry><entry><title type="html">Terraform 13 - for_each - Test Drive</title><link href="http://localhost:4000/blog/T13-for_each/" rel="alternate" type="text/html" title="Terraform 13 - for_each - Test Drive" /><published>2020-08-26T00:00:00+00:00</published><updated>2020-08-26T00:00:00+00:00</updated><id>http://localhost:4000/blog/T13-for_each</id><content type="html" xml:base="http://localhost:4000/blog/T13-for_each/">&lt;p&gt;🚀Terraform 0.13 is the new trend in the Terraform world IaC and one of the new features is the most wanted for_each🚀.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Azure" /><summary type="html">This article provides an idea on how to leverage Terraform Cloud to deploy your Infrastructure as code in Azure</summary></entry><entry><title type="html">Terraform 13 - for_each - Test Drive</title><link href="http://localhost:4000/blog/T13-for_each/" rel="alternate" type="text/html" title="Terraform 13 - for_each - Test Drive" /><published>2020-08-26T00:00:00+00:00</published><updated>2020-08-26T00:00:00+00:00</updated><id>http://localhost:4000/blog/T13-for_each</id><content type="html" xml:base="http://localhost:4000/blog/T13-for_each/">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;🚀Terraform 0.13 is the new trend in the Terraform world IaC and one of the new features is the most wanted for_each🚀.&lt;/p&gt;
 
 &lt;p&gt;I have all my Azure infrastructure currently deployed using Terraform 12. Given we already got v13 which judging for the number indicates it maybe unlucky, but 2020 cannot be beaten with the unlucky connotation😂&lt;/p&gt;
 
@@ -787,9 +1034,11 @@ Some inspection was required and start doing the needfuls(got this word in my he
 &lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
 &lt;p&gt;Terraform v13 is offering quite good new features that if you have been working with terraform for a while you were willing to have. Ovbiusly, the process for migrating current infrastructure to v13 is not quite straightforward. However, in the end this will be making your code management easier. I will be modifying my current code to leverage all the v13 features so I hope I can keep sharing my small progresses. I hope this helps someone, Hasta la vista!!!&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoy this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Terraform 13" /><category term="Azure" /><summary type="html">This article demonstrates how to use for_each in the Module-centric workflows</summary></entry><entry><title type="html">Terraform API using PowerShell - Workspace Information</title><link href="http://localhost:4000/blog/TFC/" rel="alternate" type="text/html" title="Terraform API using PowerShell - Workspace Information" /><published>2020-08-05T00:00:00+00:00</published><updated>2020-08-05T00:00:00+00:00</updated><id>http://localhost:4000/blog/TFC</id><content type="html" xml:base="http://localhost:4000/blog/TFC/">&lt;p&gt;🚀Hello there, This is my first post and I hope it helps someone and remember constructive feedback is always welcome🚀.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Terraform 13" /><category term="Azure" /><summary type="html">This article demonstrates how to use for_each in the Module-centric workflows</summary></entry><entry><title type="html">Terraform API using PowerShell - Workspace Information</title><link href="http://localhost:4000/blog/TFC/" rel="alternate" type="text/html" title="Terraform API using PowerShell - Workspace Information" /><published>2020-08-05T00:00:00+00:00</published><updated>2020-08-05T00:00:00+00:00</updated><id>http://localhost:4000/blog/TFC</id><content type="html" xml:base="http://localhost:4000/blog/TFC/">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;🚀Hello there, This is my first post and I hope it helps someone and remember constructive feedback is always welcome🚀.&lt;/p&gt;
 
 &lt;p&gt;I have been working on getting on getting Workspace information in Terraform Enterprise/Cloud. I manage a large number of workspaces and Terraform Cloud/ Enterprise does not show the terraform version of your managed workspaces and some other info that can be useful to make decisions. Terraform Enterprise gives you an idea of how many workspaces are running on which version but not individually. However, TFC does not …at least on the free version.&lt;/p&gt;
 
@@ -906,6 +1155,6 @@ Some inspection was required and start doing the needfuls(got this word in my he
 &lt;h2 id=&quot;code-download&quot;&gt;Code Download&lt;/h2&gt;
 &lt;p&gt;The code is available &lt;a href=&quot;https://github.com/cerocool1203/PowerShell/blob/master/TFC_Workspace_Status.ps1&quot;&gt;on Github&lt;/a&gt; on the  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PowerShell&lt;/code&gt; repository.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoy this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Powershell" /><summary type="html">This article demonstrates how to use PowerShell to interact with Terraform Cloud/Enterprise API</summary></entry></feed>
