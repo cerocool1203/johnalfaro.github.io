@@ -42,3 +42,6 @@ I'm always open to get in touch with people alike, just send me a tweet [@j_alex
 <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="f61fd5ff-9ba1-4c05-ba7d-7174066e8438" 
     data-share-badge-host="https://www.youracclaim.com"></div>
 <script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
+<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="34122ca9-8fea-45a9-8d81-50217c719844" 
+    data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" 
+    async src="//cdn.credly.com/assets/utilities/embed.js"></script>
