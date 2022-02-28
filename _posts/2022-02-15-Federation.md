@@ -3,10 +3,10 @@ layout: single
 title: "Federating Google Cloud Identities with Azure Active Directory"
 excerpt: "This article is demostrating how to map Azure AD identities to Google Cloud Identity."
 header:
-  teaserlogo: /assets\images\Blog\2022-02-15\identity.png
-  teaser: images/Blog/2022-02-15/identity.png
+  teaserlogo: /assets/images/Blog/2022-02-15/identity.png
+  teaser: /assets/images/Blog/2022-02-15/identity.png
   image: /assets/images/splash.jpg
-  og_image: images/identity.png
+  og_image: /assets/images/Blog/2022-02-15/identity.png
   caption:
 gallery:
   - image_path: ''
@@ -30,7 +30,7 @@ I have started working a bit on GCP and usually the first challenge you have whe
 
 1. Provision users, groups and group memberships.
    The connector allows you to provision users and groups that are already in Azure AD to provision them in Google Cloud Identity. 
-2. Single Sign-On (SSO)
+1. Single Sign-On (SSO)
   Google Cloud delegates the authentication to Azure AD by using SAML
 1. Conditional Access Policies
 1. Multifactor Authentication

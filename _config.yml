@@ -22,7 +22,7 @@ twitter_username: j_alex_alfaro
 github_username: cerocool1203
 repository: "cerocool1203/johnalfaro.github.io"
 minimal_mistakes_skin: dark
-og_image: "/assets/images/splash.jpg"
+og_image: ""
 words_per_minute         : 200
 logo                     : "/assets/images/cero.jpg"
 search: true
@@ -40,7 +40,6 @@ google-site-verification: 'e5HjbhvngEteM7CsvNacmyc1_uIjlZsL01Eu348fMwQ'
 include:
   - .htaccess
   - _pages
-  - blog/_posts
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
