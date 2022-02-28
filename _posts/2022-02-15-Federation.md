@@ -3,10 +3,10 @@ layout: single
 title: "Federating Google Cloud Identities with Azure Active Directory"
 excerpt: "This article is demostrating how to map Azure AD identities to Google Cloud Identity."
 header:
-  teaserlogo: //assets/images/Blog/2022-02-15/identity.png
-  teaser: /assets/images/Blog/2022-02-15/identity.png
+  teaserlogo: /assets\images\Blog\2022-02-15\identity.png
+  teaser: /assets\images\Blog\2022-02-15\identity.png
   image: /assets/images/splash.jpg
-  og_image: /assets/images/Blog/2022-02-15/identity.png
+  og_image: /assets\images\Blog\2022-02-15\identity.png
   caption:
 gallery:
   - image_path: ''
@@ -24,7 +24,7 @@ toc_sticky: true
 toc_icon: "laptop-code"
 classes: wide
 ---
-  <meta name="image" property="og:image" content="https://blog.johnalfaro.com/assets/images/splash.jpg">
+[!["Buy Me A Coffee"](https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png)](https://www.buymeacoffee.com/cerocool)
 
 I have started working a bit on GCP and usually the first challenge you have when doing public cloud is identity, GCP allows you to federate from multiple sources and depending on your environment you got some good options when you have some Microsoft stack like Active Directory. In my case, I wanted to test when the identities are already in Azure AD and you want to leverage the already Enterprise level features that AAD offers to establish a trust with Google Cloud Identity.  This allow us to do the below without much effort.
 
