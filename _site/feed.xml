@@ -1,4 +1,126 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-09-13T05:00:08+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Cloud Journey</title><subtitle>a bit of everything around cloud specially around Azure.</subtitle><author><name>John Alfaro</name></author><entry><title type="html">Continuous Deployment Recipe using GitHub Actions, Checkov and Terraform Cloud(CLI)</title><link href="http://localhost:4000/blog/GH_CICD/" rel="alternate" type="text/html" title="Continuous Deployment Recipe using GitHub Actions, Checkov and Terraform Cloud(CLI)" /><published>2021-09-01T00:00:00+00:00</published><updated>2021-09-01T00:00:00+00:00</updated><id>http://localhost:4000/blog/GH_CICD</id><content type="html" xml:base="http://localhost:4000/blog/GH_CICD/">&lt;meta name=&quot;image&quot; property=&quot;og:image&quot; content=&quot;https://blog.johnalfaro.com/assets/images/splash.jpg&quot; /&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-02-28T09:45:53+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Cloud Journey</title><subtitle>a bit of everything around cloud specially around Azure.</subtitle><author><name>John Alfaro</name></author><entry><title type="html">Federating Google Cloud Identities with Azure Active Directory</title><link href="http://localhost:4000/blog/Federation/" rel="alternate" type="text/html" title="Federating Google Cloud Identities with Azure Active Directory" /><published>2022-02-15T00:00:00+00:00</published><updated>2022-02-15T00:00:00+00:00</updated><id>http://localhost:4000/blog/Federation</id><content type="html" xml:base="http://localhost:4000/blog/Federation/">&lt;meta name=&quot;image&quot; property=&quot;og:image&quot; content=&quot;https://blog.johnalfaro.com/assets/images/splash.jpg&quot; /&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;I have started working a bit on GCP and usually the first challenge you have when doing public cloud is identity, GCP allows you to federate from multiple sources and depending on your environment you got some good options when you have some Microsoft stack like Active Directory. In my case, I wanted to test when the identities are already in Azure AD and you want to leverage the already Enterprise level features that AAD offers to establish a trust with Google Cloud Identity.  This allow us to do the below without much effort.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Provision users, groups and group memberships.
+The connector allows you to provision users and groups that are already in Azure AD to provision them in Google Cloud Identity.&lt;/li&gt;
+  &lt;li&gt;Single Sign-On (SSO)
+  Google Cloud delegates the authentication to Azure AD by using SAML&lt;/li&gt;
+  &lt;li&gt;Conditional Access Policies&lt;/li&gt;
+  &lt;li&gt;Multifactor Authentication&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Note&lt;/strong&gt; 
+Unfortunately, there is a gotcha as Microsoft currently does not allow for the ability to sync nested groups through Enterprise Applications. Usually, most enterprises do have groups nested in groups and you cannot sync them through the connector.&lt;/p&gt;
+
+&lt;p&gt;The diagram below depicts the flow process to achieve the provisioning as well as Single Sign-On. I have used one Enterprise Application for both provisioning and Single-Sign-On.
+&lt;img src=&quot;/assets\images\Blog\2022-02-15\identity.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;google-requirements&quot;&gt;Google Requirements&lt;/h3&gt;
+&lt;p&gt;You need a to create an user account in the &lt;a href=&quot;https://admin.google.com/&quot;&gt;GCP Admin Console&lt;/a&gt; which for my PoC it is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ceroprov@johnalfaro.com&lt;/code&gt; and it needs to have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;super-admin&lt;/code&gt; permissions. This account will be use to authorize the creation of groups and users in the GCP side.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets\images\Blog\2022-02-15\prov.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;azure-ad-requirements&quot;&gt;Azure AD requirements&lt;/h3&gt;
+&lt;p&gt;There are few settings to be configured in Azure AD to enable the Enterprise Application to handle both user provisioning and single sign-on. Make sure you had the correct permissions to do so. The following roles from higher to lower permisssions to achieve this task are: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Global Administrator&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Cloud Application Administrator&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Application Administrator&lt;/code&gt;.
+&lt;img src=&quot;/assets\images\Blog\2022-02-15\entapp.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Create the Google Cloud Connector Enterprise Application. Search for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Google Cloud&lt;/code&gt; and there is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Google Cloud/G Suite Connector by Microsoft &lt;/code&gt; The following settings are required from the properties.
+    &lt;ul&gt;
+      &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Enabled for users&lt;/code&gt; to sign-in to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Yes&lt;/code&gt;.&lt;/li&gt;
+      &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;User assignment&lt;/code&gt; required to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Yes&lt;/code&gt;.&lt;/li&gt;
+      &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Visible to users&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;No&lt;/code&gt;.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Set the following settings in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;provisioning settings&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provisioning Mode&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Automatic&lt;/code&gt;.&lt;/li&gt;
+      &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Admin Credentials&lt;/code&gt; then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Authorize&lt;/code&gt;.
+I used the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ceroprov@johnalfaro.com&lt;/code&gt; account to authorize the application. By clicking, allow this will confirm access to the GCP Cloud Identity API.
+&lt;img src=&quot;/assets\images\Blog\2022-02-15\aad_to_gcp.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Test the connection to make sure you can auth to the API.
+&lt;img src=&quot;/assets\images\Blog\2022-02-15\testcon.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Important&lt;/strong&gt; Always keep security in mind and use credentials with less privileged access.&lt;/p&gt;
+
+&lt;h3 id=&quot;configure-usergroups-provisioning&quot;&gt;Configure User/Groups Provisioning&lt;/h3&gt;
+&lt;p&gt;In Azure AD we configure the mapping of users and groups to the GCP Cloud Identity API.&lt;/p&gt;
+
+&lt;h4 id=&quot;user-provisioning&quot;&gt;User Provisioning&lt;/h4&gt;
+&lt;p&gt;I have used the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UPN&lt;/code&gt; to configure the mapping of users. This is the unique identifier of the user in Azure AD, so cannot go wrong there 🤠. The &lt;a href=&quot;https://cloud.google.com/architecture/identity/federating-gcp-with-azure-ad-configuring-provisioning-and-single-sign-on#configure_user_provisioning&quot;&gt;GCP documentation&lt;/a&gt; provides what can be used to configure the mapping.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attribute mapping&lt;/code&gt; select row &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;surname&lt;/code&gt; and set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Default value if null&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attribute mapping&lt;/code&gt; select row &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;givenName&lt;/code&gt; and set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Default value if null&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;group-provisioning&quot;&gt;Group Provisioning&lt;/h4&gt;
+&lt;p&gt;I have used the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Name&lt;/code&gt; to configure the mapping of groups. The [GCP documentation][&lt;a href=&quot;https://cloud.google.com/architecture/identity/federating-gcp-with-azure-ad-configuring-provisioning-and-single-sign-on#configure_user_provisioning&quot;&gt;gcp_doco&lt;/a&gt; recommends to edit the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mail&lt;/code&gt; attribute in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attribute mappings&lt;/code&gt; and change mapping type to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Expression&lt;/code&gt; and set the expression as below. Where I set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;johnalfaro.com&lt;/code&gt;, please set your registered domain.&lt;/p&gt;
+
+&lt;p&gt;I have also setup the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sync only assigned users and groups&lt;/code&gt; as I do not want to sync all users and groups which is definitely recommended for any organization.&lt;/p&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;Join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;@&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;NormalizeDiacritics&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;StripSpaces&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displayName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;johnalfaro&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;)
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets\images\Blog\2022-02-15\mapp.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;user-and-groups-syncing&quot;&gt;User and Groups Syncing&lt;/h4&gt;
+&lt;p&gt;Now it’s time to test-drive the connector. Make sure you add some relevant users and groups you want to sync to GCP by adding them under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;manage&lt;/code&gt; then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user and groups&lt;/code&gt;. After this, you have two options to sync the users and groups.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://docs.microsoft.com/en-us/azure/active-directory/app-provisioning/provision-on-demand&quot;&gt;Provision on demand&lt;/a&gt;: This is kind of a manual process, you can use it to test, troubleshoot and also validate expressions set in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attribute mappings&lt;/code&gt;
+&lt;img src=&quot;/assets\images\Blog\2022-02-15\provondemand.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;Automatic Provisioning: This is the recommended option; it will provision the users and groups in the GCP Cloud Identity API. There is an initial provisioning cycle, followed by periodic incremental cycles that runs every 40 min.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;monitoring&quot;&gt;Monitoring&lt;/h4&gt;
+&lt;p&gt;Luckily we can monitor the provisioning process OOB. The logs provide details about all operations run by the user provisioning service, including provisioning status for individual users and groups.
+&lt;img src=&quot;/assets\images\Blog\2022-02-15\logs.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;single-sign-on-configuration&quot;&gt;Single Sign-On configuration&lt;/h3&gt;
+&lt;p&gt;I have followed the GCP documentation that was easy to follow to setup SSO. The configuration is as follows.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Edit the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Basic SAML Configuration&lt;/code&gt; with the following settings:
+    &lt;ul&gt;
+      &lt;li&gt;Identifier (Entity ID): google.com&lt;/li&gt;
+      &lt;li&gt;Reply URL: https://www.google.com/&lt;/li&gt;
+      &lt;li&gt;Sign on URL: https://www.google.com/a/johnalfaro/ServiceLogin?continue=https://console.cloud.google.com/, replacing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;johnalfaro&lt;/code&gt; with your Domain Name.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Download the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Certificate(base64)&lt;/code&gt; certificate from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SAML Signing Certificate&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;In the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Attributes &amp;amp; Claims&lt;/code&gt; section, I have selected &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user.userprincipalname&lt;/code&gt; as the Unique identifier.&lt;/li&gt;
+  &lt;li&gt;In the &lt;a href=&quot;https://admin.google.com/&quot;&gt;GCP Admin Console&lt;/a&gt; login as a Super-admin user and navigate to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Security &amp;gt; Authentication &amp;gt; SSO with third-party IdP&lt;/code&gt; then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add SSO profile&lt;/code&gt;. Set to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;enabled&lt;/code&gt; the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Setup SSO with third party identity provider&lt;/code&gt;.
+    &lt;ul&gt;
+      &lt;li&gt;Sign-in page URL: Copy the URL from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Set up Google Cloud&lt;/code&gt; card, in the Google  Enterprise Application SSO Configuration.&lt;/li&gt;
+      &lt;li&gt;Sign-out page URL: https://login.microsoftonline.com/common/wsfederation?wa=wsignout1.0.&lt;/li&gt;
+      &lt;li&gt;Change password URL: https://account.activedirectory.windowsazure.com/changepassword.aspx, this will depends if you are using SSPR(Self-service Password Reset).&lt;/li&gt;
+      &lt;li&gt;Upload the certificate in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;verification certificate&lt;/code&gt; field.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets\images\Blog\2022-02-15\sso.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;the-test-drive️&quot;&gt;The Test-Drive🦸‍♂️&lt;/h3&gt;
+&lt;p&gt;After setting everything up I have tested the connector by adding some users and groups to get them synced to GCP, as well as, login to the &lt;a href=&quot;https://console.cloud.google.com/&quot;&gt;GCP Console&lt;/a&gt;, which will redirect me to Azure AD  to sign-in and after successful sign-in I will be redirected to the GCP Console as per below.👨‍💻&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets\images\Blog\2022-02-15\sso_gcp.gif&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
+&lt;p&gt;The Google documentation was easy to follow and the setup was simple in a demo environment. However, I did have some issues with the provisioning part as every now and then it was being quarantined while using the automatic provisioning, I was getting the email notification. However, at an Enterprise level I will definitely prefer to provision users and groups in GCP using the API. This will ensure that the users and groups are synced effectively to GCP. In addition, nested groups will not be an issue as unlike the provisioning feature in Azure AD.&lt;/p&gt;
+
+&lt;p&gt;I did have some fun as well writing in markdown and getting &lt;a href=&quot;https://copilot.github.com/&quot;&gt;Github Copilot&lt;/a&gt; helping me to write the blog which to my surprise was accurate. I guess I may have less typos this time around.👨‍💻&lt;/p&gt;
+
+&lt;p&gt;I do hope this helps someone and that you find it informative,, so please let me know your constructive feedback as it’s always important🕵️‍♂️,, That’s it for now,,, Hasta la vista🐱‍🏍!!!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Azure Active Directory" /><category term="Google Cloud" /><category term="Identity Federation" /><summary type="html">This article is demostrating how to map Azure AD identities to Google Cloud Identity.</summary></entry><entry><title type="html">Continuous Deployment Recipe using GitHub Actions, Checkov and Terraform Cloud(CLI)</title><link href="http://localhost:4000/blog/GH_CICD/" rel="alternate" type="text/html" title="Continuous Deployment Recipe using GitHub Actions, Checkov and Terraform Cloud(CLI)" /><published>2021-09-01T00:00:00+00:00</published><updated>2021-09-01T00:00:00+00:00</updated><id>http://localhost:4000/blog/GH_CICD</id><content type="html" xml:base="http://localhost:4000/blog/GH_CICD/">&lt;meta name=&quot;image&quot; property=&quot;og:image&quot; content=&quot;https://blog.johnalfaro.com/assets/images/splash.jpg&quot; /&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 

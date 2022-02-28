@@ -34,4 +34,10 @@ var store = [{
         "tags": ["Azure Web App","GitHub Actions","Terraform Cloud","Checkov"],
         "url": "/blog/GH_CICD/",
         "teaser": "/assets/images/gha.jpg"
+      },{
+        "title": "Federating Google Cloud Identities with Azure Active Directory",
+        "excerpt":"I have started working a bit on GCP and usually the first challenge you have when doing public cloud is identity, GCP allows you to federate from multiple sources and depending on your environment you got some good options when you have some Microsoft stack like Active Directory. In my...","categories": ["Blog"],
+        "tags": ["Azure Active Directory","Google Cloud","Identity Federation"],
+        "url": "/blog/Federation/",
+        "teaser": "/assets/images/Blog/2022-02-15/identity.png"
       }]
