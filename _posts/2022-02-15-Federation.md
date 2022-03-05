@@ -80,7 +80,7 @@ I have used the `UPN` to configure the mapping of users. This is the unique iden
   2. Under `attribute mapping` select row `givenName` and set `Default value if null` to `_`.
 
 #### Group Provisioning
-I have used the `Name` to configure the mapping of groups. The [GCP documentation][[gcp_doco] recommends to edit the `mail` attribute in the `attribute mappings` and change mapping type to `Expression` and set the expression as below. Where I set `johnalfaro.com`, please set your registered domain.
+I have used the `Name` to configure the mapping of groups. The [GCP documentation][gcp_doco] recommends to edit the `mail` attribute in the `attribute mappings` and change mapping type to `Expression` and set the expression as below. Where I set `johnalfaro.com`, please set your registered domain.
 
 I have also setup the `Sync only assigned users and groups` as I do not want to sync all users and groups which is definitely recommended for any organization.
 
