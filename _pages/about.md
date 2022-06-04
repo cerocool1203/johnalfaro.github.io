@@ -45,3 +45,6 @@ I'm always open to get in touch with people alike, just send me a tweet [@j_alex
 <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="34122ca9-8fea-45a9-8d81-50217c719844" 
     data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" 
     async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="a3f699a8-466a-41ef-8801-8825a044178a"                    
+    data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" 
+    async src="//cdn.credly.com/assets/utilities/embed.js"></script>
