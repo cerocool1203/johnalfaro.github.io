@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "Federating Google Cloud Identities with Azure Active Directory"
-excerpt: "This article is demostrating how to map Azure AD identities to Google Cloud Identity."
+excerpt: "This article is demonstrating how to map Azure AD identities to Google Cloud Identity."
 header:
   teaserlogo: /assets/images/Blog/2022-02-15/identity.png
   teaser: /assets/images/Blog/2022-02-15/identity.png
