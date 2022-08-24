@@ -43,7 +43,13 @@ var store = [{
       },{
         "title": "Deploying Azure NetApp Files Preview features using Terraform AzAPI Provider",
         "excerpt":"I was working on a project that was using Azure NetApp Files and the idea was to test some of the preview features to understand how they can positively improve the capabilities and user experience. The infrastructure was provisioned using terraform. However, those preview features are not enabled yet on...","categories": ["Blog"],
-        "tags": ["Azure","Terraform","NetApp","Terraform Cloud"],
+        "tags": ["Azure","Terraform","NetApp","Azure NetApp Files"],
         "url": "/blog/azapi",
         "teaser": "/assets/images/Blog/2022-06-03%5Canfhl.png"
+      },{
+        "title": "Managing Azure NetApp Files Volume Backup feature with Terraform AzAPI Provider",
+        "excerpt":"Azure NetApp Files data protection is extending to not just snapshots but it will be able to create volume backups based on volume snapshots, so I decided to test this preview feature to understand how the backup capability will enhance the data protection posture for ANF. Currently, Backups are a...","categories": ["Blog"],
+        "tags": ["Azure","Terraform","NetApp","Azure NetApp Files","ANF","TFC"],
+        "url": "/blog/ANF_Backup",
+        "teaser": "/assets/images/Blog/2022-08-24%5Canfbackup.png"
       }]
