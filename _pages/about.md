@@ -22,29 +22,35 @@ My name is John Alfaro, originally from Bogota-Colombia and loving living in Mel
 I'm always open to get in touch with people alike, just send me a tweet [@j_alex_alfaro](https://twitter.com/j_alex_alfaro), Plese let me know what do you think and what interest you or issues you are having that I may have experienced as well
 
 <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="40d0705e-c1e7-46e0-a07f-1621a0b7682b" 
-    data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
-<script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
+    data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" 
+    async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="d129aea1-324d-41ae-8344-6ae0629ef42c"
-    data-share-badge-host="https://www.youracclaim.com"></div>
-<script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
-<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="b5139fc0-7aa8-467e-950f-9095b026bb47"
-    data-share-badge-host="https://www.youracclaim.com"></div>
-<script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
+    data-share-badge-host="https://www.youracclaim.com"></div><script type="text/javascript" 
+    async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
+<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="786335a3-860f-42f0-acc0-493fcf3ed062" 
+    data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" 
+    async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="26538cf1-9990-42fb-8577-877e4c3e7141"
-    data-share-badge-host="https://www.youracclaim.com"></div>
-<script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
+    data-share-badge-host="https://www.youracclaim.com"></div><script type="text/javascript" 
+    async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
 <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="e5bb3e97-a4fc-40b5-9931-ae6fa15c1459" 
-    data-share-badge-host="https://www.youracclaim.com"></div>
-<script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
+    data-share-badge-host="https://www.youracclaim.com"></div><script type="text/javascript" 
+    async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
 <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="c3c315ae-6be6-40cb-95d0-6fbb8f9cb912" 
-    data-share-badge-host="https://www.youracclaim.com"></div>
-<script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
+    data-share-badge-host="https://www.youracclaim.com"></div><script type="text/javascript" 
+    async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
 <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="f61fd5ff-9ba1-4c05-ba7d-7174066e8438" 
-    data-share-badge-host="https://www.youracclaim.com"></div>
-<script type="text/javascript" async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
+    data-share-badge-host="https://www.youracclaim.com"></div><script type="text/javascript" 
+    async src="//cdn.youracclaim.com/assets/utilities/embed.js"></script>
 <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="34122ca9-8fea-45a9-8d81-50217c719844" 
     data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" 
     async src="//cdn.credly.com/assets/utilities/embed.js"></script>
 <div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="a3f699a8-466a-41ef-8801-8825a044178a"                    
     data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" 
+    async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="75d95efb-c370-4c0f-8ac5-2b22802a7521"
+    data-share-badge-host="https://www.credly.com"></div><script type="text/javascript"
+    async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="de9914be-ccf6-4f83-9595-694fd0f090b7"
+    data-share-badge-host="https://www.credly.com"></div><script type="text/javascript"
     async src="//cdn.credly.com/assets/utilities/embed.js"></script>
