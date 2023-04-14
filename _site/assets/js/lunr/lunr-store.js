@@ -52,4 +52,10 @@ var store = [{
         "tags": ["Azure","Terraform","NetApp","Azure NetApp Files","ANF","TFC"],
         "url": "/blog/ANF_Backup",
         "teaser": "/assets/images/Blog/2022-08-24%5Canfbackup.png"
+      },{
+        "title": "Terraforming the Azure Open AI service Deployment via AzAPI and AzureRM providers for the Enterprise... and chat GPT model",
+        "excerpt":"Hey there! Have you heard of Azure Open AI? It’s an awesome platform developed by Microsoft that helps businesses of all sizes and industries leverage the power of artificial intelligence (AI) to achieve their digital transformation goals. With Azure Open AI, organizations can automate tasks, gain insights, and make better...","categories": ["Blog"],
+        "tags": ["Azure","Terraform","Azure Open AI","TFC"],
+        "url": "/blog/AOI",
+        "teaser": "/assets/images/Blog/2023-04-14%5Caoi.jpg"
       }]
