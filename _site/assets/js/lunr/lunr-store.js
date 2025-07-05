@@ -58,4 +58,10 @@ var store = [{
         "tags": ["Azure","Terraform","Azure Open AI","TFC"],
         "url": "/blog/AOI",
         "teaser": "/assets/images/Blog/2023-04-14%5Caoi.jpg"
+      },{
+        "title": "Terraforming Cost Anomaly Detection on AWS and Azure",
+        "excerpt":"TL;DR: Learn how to set up cost anomaly detection on AWS and Azure using Terraform, compare their features, and see which is best for your FinOps needs. Introduction 🚀 Cost overruns can derail even the most well-planned cloud strategies. Fortunately, both AWS and Azure offer native capabilities for detecting cost...","categories": ["Blog"],
+        "tags": ["AWS","Azure","Terraform","Cost Management","FinOps"],
+        "url": "/blog/terraform-cost-anomaly-detection",
+        "teaser": "/assets/images/Blog/2025-07-05/aws-azure.jpg"
       }]
