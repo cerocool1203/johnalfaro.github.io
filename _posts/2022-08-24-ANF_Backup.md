@@ -198,20 +198,21 @@ Something I found odd was that even though the backup policy was already "enable
 ![image-center](/assets\images\Blog\2022-08-24\failure.png){: .align-center}
 
 ### Summary 📻
-I can see more adoption using these features more and more in ANF as it was missing to have a more complete Data Protection capability. In regards to the AzAPI provider, once again came to the rescue with its flexibility to provide preview features support for Azure resources. Again, I am keen to see how the `AzAPI2AzureRM` migration tool will work in this case when the features are added to the AzureRM provider and see how seamless the experience is.  I will be looking as to how can I create volumes from a backup and if there is capability to create manual backups like the manual snapshots using terraform. 
-I do hope this helps someone and that you find it informative,, so please let me know your constructive feedback as it's always important🕵️‍♂️,, That's it for now,,, Hasta la vista🐱‍🏍!!!
+I can see more adoption using these features more and more in ANF as it was missing to have a more complete Data Protection capability. In regards to the AzAPI provider, once again came to the rescue with its flexibility to provide preview features support for Azure resources. Again, I am keen to see how the `AzAPI2AzureRM` migration tool will work in this case when the features are added to the AzureRM provider and see how seamless the experience is. I will be looking into how I can create volumes from a backup and whether there is capability to create manual backups, similar to manual snapshots, using Terraform.
 
-**🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.**
+I hope this helps someone and that you find it informative. Please let me know your constructive feedback, as it's always important. 🕵️‍♂️ That's it for now—Hasta la vista! 🐱‍🏍
+
+**🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working on new content. 🚴‍♂️**
 
 [!["Buy Me A Coffee"](https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png)](https://www.buymeacoffee.com/cerocool)
 
-[azurerm]: https://registry.terraform.io/providers/hashicorp/azurerm
-[azapi]: https://registry.terraform.io/providers/Azure/azapi
-[azapi-provider]: https://github.com/Azure/terraform-provider-azapi
-[preview]: https://forms.office.com/pages/responsepage.aspx?id=v4j5cvGGr0GRqy180BHbR2Qj2eZL0mZPv1iKUrDGvc9UMkI3NUIxVkVEVkdJMko3WllQMVRNMTdEWSQlQCN0PWcu
-[vscode]: https://marketplace.visualstudio.com/items?itemName=azapi-vscode.azapi
-[az2rm]: https://docs.microsoft.com/en-us/azure/developer/terraform/overview-azapi-provider#azapi2azurerm-migration-tool
-[azapiarticle]: https://blog.johnalfaro.com/blog/azapi
-[backup_rec]: https://docs.microsoft.com/en-us/azure/azure-netapp-files/backup-requirements-considerations
-[cbs]: https://docs.netapp.com/us-en/cloud-manager-backup-restore/task-backup-to-azure.html#quick-start
+[azurerm]: https://registry.terraform.io/providers/hashicorp/azurerm  
+[azapi]: https://registry.terraform.io/providers/Azure/azapi  
+[azapi-provider]: https://github.com/Azure/terraform-provider-azapi  
+[preview]: https://forms.office.com/pages/responsepage.aspx?id=v4j5cvGGr0GRqy180BHbR2Qj2eZL0mZPv1iKUrDGvc9UMkI3NUIxVkVEVkdJMko3WllQMVRNMTdEWSQlQCN0PWcu  
+[vscode]: https://marketplace.visualstudio.com/items?itemName=azapi-vscode.azapi  
+[az2rm]: https://docs.microsoft.com/en-us/azure/developer/terraform/overview-azapi-provider#azapi2azurerm-migration-tool  
+[azapiarticle]: https://blog.johnalfaro.com/blog/azapi  
+[backup_rec]: https://docs.microsoft.com/en-us/azure/azure-netapp-files/backup-requirements-considerations  
+[cbs]: https://docs.netapp.com/us-en/cloud-manager-backup-restore/task-backup-to-azure.html#quick-start  
 [anfdoc]: https://docs.microsoft.com/en-us/azure/azure-netapp-files/backup-introduction

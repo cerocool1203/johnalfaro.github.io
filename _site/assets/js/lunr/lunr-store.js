@@ -6,7 +6,7 @@ var store = [{
         "teaser": ""
       },{
         "title": "Terraform 13 - for_each - Test Drive",
-        "excerpt":"🚀Terraform 0.13 is the new trend in the Terraform world IaC and one of the new features is the most wanted for_each🚀. I have all my Azure infrastructure currently deployed using Terraform 12. Given we already got v13 which judging for the number indicates it maybe unlucky, but 2020 cannot...","categories": ["Blog"],
+        "excerpt":"🚀 Terraform 0.13: The for_each Feature Terraform 0.13 is the latest trend in the Terraform IaC world, and one of its most anticipated features is the new for_each capability. I have all my Azure infrastructure currently deployed using Terraform 12. Now that version 13 is available (which, judging by the...","categories": ["Blog"],
         "tags": ["Terraform Cloud","Terraform Enterprise","Terraform 13","Azure"],
         "url": "/blog/T13-for_each",
         "teaser": ""
@@ -36,16 +36,16 @@ var store = [{
         "teaser": "/assets/images/gha.jpg"
       },{
         "title": "Federating Google Cloud Identities with Azure Active Directory",
-        "excerpt":"I have started working a bit on GCP and usually the first challenge you have when doing public cloud is identity, GCP allows you to federate from multiple sources and depending on your environment you got some good options when you have some Microsoft stack like Active Directory. In my...","categories": ["Blog"],
+        "excerpt":"I recently started working with GCP, and as with most public cloud platforms, the first challenge is identity management. GCP allows federation from multiple sources, and if you have a Microsoft stack like Active Directory, you have some great options. In my case, I wanted to test scenarios where identities...","categories": ["Blog"],
         "tags": ["Azure Active Directory","Google Cloud","Identity Federation"],
         "url": "/blog/Federation",
         "teaser": "/assets/images/Blog/2022-02-15/identity.png"
       },{
-        "title": "Deploying Azure NetApp Files Preview features using Terraform AzAPI Provider",
-        "excerpt":"I was working on a project that was using Azure NetApp Files and the idea was to test some of the preview features to understand how they can positively improve the capabilities and user experience. The infrastructure was provisioned using terraform. However, those preview features are not enabled yet on...","categories": ["Blog"],
+        "title": "Deploying Azure NetApp Files Preview Features Using Terraform AzAPI Provider",
+        "excerpt":"I was working on a project using Azure NetApp Files, aiming to test some preview features to understand how they can improve capabilities and user experience. The infrastructure was provisioned using Terraform. However, those preview features are not yet enabled in the Terraform AzureRM provider. Previously, the workaround was to...","categories": ["Blog"],
         "tags": ["Azure","Terraform","NetApp","Azure NetApp Files"],
         "url": "/blog/azapi",
-        "teaser": "/assets/images/Blog/2022-06-03%5Canfhl.png"
+        "teaser": "/assets/images/Blog/2022-06-03/anfhl.png"
       },{
         "title": "Managing Azure NetApp Files Volume Backup feature with Terraform AzAPI Provider",
         "excerpt":"Azure NetApp Files data protection is extending to not just snapshots but it will be able to create volume backups based on volume snapshots, so I decided to test this preview feature to understand how the backup capability will enhance the data protection posture for ANF. Currently, Backups are a...","categories": ["Blog"],

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-07-05T08:24:42+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Cloud Journey</title><subtitle>a bit of everything around cloud specially around Azure.</subtitle><author><name>John Alfaro</name></author><entry><title type="html">Terraforming the Azure Open AI service Deployment via AzAPI and AzureRM providers for the Enterprise… and chat GPT model</title><link href="http://localhost:4000/blog/AOI" rel="alternate" type="text/html" title="Terraforming the Azure Open AI service Deployment via AzAPI and AzureRM providers for the Enterprise… and chat GPT model" /><published>2023-04-12T00:00:00+00:00</published><updated>2023-04-12T00:00:00+00:00</updated><id>http://localhost:4000/blog/AOI</id><content type="html" xml:base="http://localhost:4000/blog/AOI">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-07-05T09:12:11+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">The Cloud Journey</title><subtitle>a bit of everything around cloud specially around Azure.</subtitle><author><name>John Alfaro</name></author><entry><title type="html">Terraforming the Azure Open AI service Deployment via AzAPI and AzureRM providers for the Enterprise… and chat GPT model</title><link href="http://localhost:4000/blog/AOI" rel="alternate" type="text/html" title="Terraforming the Azure Open AI service Deployment via AzAPI and AzureRM providers for the Enterprise… and chat GPT model" /><published>2023-04-12T00:00:00+00:00</published><updated>2023-04-12T00:00:00+00:00</updated><id>http://localhost:4000/blog/AOI</id><content type="html" xml:base="http://localhost:4000/blog/AOI">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Hey there! Have you heard of Azure Open AI? It’s an awesome platform developed by Microsoft that helps businesses of all sizes and industries leverage the power of artificial intelligence (AI) to achieve their digital transformation goals. With Azure Open AI, organizations can automate tasks, gain insights, and make better decisions faster than ever before.&lt;/p&gt;
 
@@ -13,76 +13,85 @@
   &lt;li&gt;Data Protection: Azure Open AI includes a range of data protection features, including backup and disaster recovery, to help ensure that customer data is protected in the event of a data loss or system failure.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;The diagram below depicts the architecture to be deployed for Azure Open AI Account. By the way I chose East US as Chat GPT is currently in preview in that region.
-&lt;img src=&quot;/assets\images\Blog\2023-04-14\aoi.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;The diagram below depicts the architecture to be deployed for the Azure Open AI Account. By the way, I chose East US as Chat GPT is currently in preview in that region.&lt;/p&gt;
 
-&lt;p&gt;One of the key features is that Azure Open AI does use Private Endpoint. which lets you restrict access to your Azure Open AI services to only those resources within your virtual network that require access. So you can keep your services safe and secure, while still allowing authorized resources to access what they need.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2023-04-14/aoi.jpg&quot; alt=&quot;Azure OpenAI Architecture&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;For that reason, I will be focusing on the deployment of Azure Open AI using &lt;a href=&quot;https://registry.terraform.io/providers/hashicorp/azurerm&quot;&gt;Terraform AzureRM provider&lt;/a&gt; and &lt;a href=&quot;https://registry.terraform.io/providers/Azure/azapi&quot;&gt;Terraform AzAPI provider&lt;/a&gt; to enable and manage this feature. Which I did not know there was already possible when I was exploring so I have both ways of deployments. However, I did notice a big time difference in the deployment time using the AzAPI provider vs the AzureRM provider.&lt;/p&gt;
+&lt;p&gt;One of the key features is that Azure Open AI supports Private Endpoints, which let you restrict access to your Azure Open AI services to only those resources within your virtual network that require access. This keeps your services safe and secure, while still allowing authorized resources to access what they need.&lt;/p&gt;
+
+&lt;p&gt;For that reason, I will be focusing on the deployment of Azure Open AI using the &lt;a href=&quot;https://registry.terraform.io/providers/hashicorp/azurerm&quot;&gt;Terraform AzureRM provider&lt;/a&gt; and &lt;a href=&quot;https://registry.terraform.io/providers/Azure/azapi&quot;&gt;Terraform AzAPI provider&lt;/a&gt; to enable and manage this feature. I did not know this was already possible when I started exploring, so I have included both deployment methods. However, I did notice a significant difference in deployment time: the AzAPI provider was much faster than the AzureRM provider.&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h3 id=&quot;azure-open-ai-onboarding-️️&quot;&gt;Azure Open AI Onboarding 🕵️‍♀️&lt;/h3&gt;
-&lt;p&gt;To get started using Azure Open AI follow the next steps.&lt;/p&gt;
+
+&lt;p&gt;To get started with Azure Open AI, follow these steps:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Have your azure subscription ID to get onboarded.&lt;/li&gt;
-  &lt;li&gt;Fill up the &lt;a href=&quot;https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUOFA5Qk1UWDRBMjg0WFhPMkIzTzhKQ1dWNyQlQCN0PWcu&quot;&gt;Request Access Form&lt;/a&gt;. It takes a couple of days to get a response back.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;If you are an Enterprise customer and you want to make sure the data getting feed to the service is not compromised you can opt out so data is not processed by Microsoft for abuse monitoring by filling up&lt;/strong&gt; &lt;a href=&quot;https://aka.ms/oai/modifiedaccess&quot;&gt;this form&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;I have already my Terraform Cloud Org for my deployment 😎&lt;/li&gt;
-  &lt;li&gt;Deploy the Azure Open AI service via terraform.&lt;/li&gt;
-  &lt;li&gt;Deploy the model to be used via terraform.&lt;/li&gt;
+  &lt;li&gt;Have your Azure subscription ID ready to get onboarded.&lt;/li&gt;
+  &lt;li&gt;Fill out the &lt;a href=&quot;https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUOFA5Qk1UWDRBMjg0WFhPMkIzTzhKQ1dWNyQlQCN0PWcu&quot;&gt;Request Access Form&lt;/a&gt;. It takes a couple of days to get a response.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;If you are an Enterprise customer and want to ensure your data is not processed by Microsoft for abuse monitoring, you can opt out by filling out&lt;/strong&gt; &lt;a href=&quot;https://aka.ms/oai/modifiedaccess&quot;&gt;this form&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;I already have my Terraform Cloud Org set up for my deployment. 😎&lt;/li&gt;
+  &lt;li&gt;Deploy the Azure Open AI service via Terraform.&lt;/li&gt;
+  &lt;li&gt;Deploy the model to be used via Terraform.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p class=&quot;notice--info&quot;&gt;Important info here around Data Privacy.
-https://learn.microsoft.com/en-us/legal/cognitive-services/openai/data-privacy&lt;/p&gt;
+&lt;blockquote class=&quot;notice--info&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;ℹ️ Data Privacy:&lt;/strong&gt;&lt;br /&gt;
+For important information regarding data privacy, please refer to the &lt;a href=&quot;https://learn.microsoft.com/en-us/legal/cognitive-services/openai/data-privacy&quot;&gt;Azure OpenAI Data Privacy documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;h3 id=&quot;terraform-configuration-using-azapi-provider-&quot;&gt;Terraform Configuration using AzAPI Provider 👨‍💻&lt;/h3&gt;
-&lt;p&gt;Funny enough I was looking at ways to deploy Azure Open AI using terraform. I checked the AzureRM provider but there was no indication of an OpenAI resource. Hence, my first try was using the AzAPI provider. The code I used to deploy is below. I have few more examples using the AzAPI in older articles if you are interested.&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;p&gt;&lt;strong&gt;Azure Open AI Account&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;###&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Resource&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Group&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Cognitive&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Services&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;azurerm_resource_group&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;openai&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;     &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;cerocool-ai-rg&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;eastus&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;h3 id=&quot;terraform-configuration-using-azapi-provider-&quot;&gt;Terraform Configuration Using AzAPI Provider 👨‍💻&lt;/h3&gt;
 
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;###&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Azure&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Open&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;AI&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Account&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;azapi_resource&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;openai_account&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Microsoft.CognitiveServices/accounts@2022-12-01&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;cerocoolai-azapi&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;parent_id&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;resource.azurerm_resource_group.openai.id&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;eastus&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;jsonencode(&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;sku&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-        &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;S0&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;kind&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;OpenAI&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;publicNetworkAccess&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Disabled&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;customSubDomainName&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ceroazapi&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;p&gt;When I first looked into deploying Azure Open AI with Terraform, I noticed the AzureRM provider did not have an OpenAI resource. So, my first attempt was with the AzAPI provider. The code I used is below. (I have more AzAPI examples in earlier articles if you’re interested.)&lt;/p&gt;
 
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;###&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Azure&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Open&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;AI&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Model&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Chat&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;GPT&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;azapi_resource&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;chatgpt_model_azapi&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Microsoft.CognitiveServices/accounts/deployments@2022-12-01&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;      &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;cero_chatgpt_model&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;parent_id&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;resource.azapi_resource.openai_account.id&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;jsonencode(&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;model&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-        &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;OpenAI&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-        &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;gpt-35-turbo&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-        &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0301&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;scaleSettings&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-        &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;scaleType&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Standard&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;p&gt;&lt;strong&gt;Azure Open AI Account Example:&lt;/strong&gt;&lt;/p&gt;
 
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-terraform highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Resource Group for Cognitive Services&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;azurerm_resource_group&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;openai&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;cerocool-ai-rg&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;eastus&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Azure Open AI Account&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;azapi_resource&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;openai_account&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Microsoft.CognitiveServices/accounts@2022-12-01&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;cerocoolai-azapi&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;parent_id&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;azurerm_resource_group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;openai&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;eastus&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;body&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsonencode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;sku&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;S0&quot;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;kind&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;OpenAI&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;properties&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;publicNetworkAccess&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Disabled&quot;&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;customSubDomainName&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ceroazapi&quot;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Azure Open AI Model - Chat GPT&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;azapi_resource&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;chatgpt_model_azapi&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Microsoft.CognitiveServices/accounts/deployments@2022-12-01&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;cero_chatgpt_model&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;parent_id&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;azapi_resource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;openai_account&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;body&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsonencode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;properties&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;model&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;format&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;OpenAI&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;gpt-35-turbo&quot;&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;0301&quot;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;scaleSettings&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;scaleType&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Standard&quot;&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;terraform-configuration-using-azurerm-provider-&quot;&gt;Terraform Configuration using AzureRM Provider 👷&lt;/h3&gt;
 &lt;p&gt;After digging a bit more I realise you can use Cognitive Services resource to deploy the resource😎.&lt;/p&gt;
@@ -330,300 +339,386 @@ The first snapshot when the backup feature is enabled is called a baseline snaps
 &lt;img src=&quot;/assets\images\Blog\2022-08-24\failure.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;summary-&quot;&gt;Summary 📻&lt;/h3&gt;
-&lt;p&gt;I can see more adoption using these features more and more in ANF as it was missing to have a more complete Data Protection capability. In regards to the AzAPI provider, once again came to the rescue with its flexibility to provide preview features support for Azure resources. Again, I am keen to see how the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AzAPI2AzureRM&lt;/code&gt; migration tool will work in this case when the features are added to the AzureRM provider and see how seamless the experience is.  I will be looking as to how can I create volumes from a backup and if there is capability to create manual backups like the manual snapshots using terraform. 
-I do hope this helps someone and that you find it informative,, so please let me know your constructive feedback as it’s always important🕵️‍♂️,, That’s it for now,,, Hasta la vista🐱‍🏍!!!&lt;/p&gt;
+&lt;p&gt;I can see more adoption using these features more and more in ANF as it was missing to have a more complete Data Protection capability. In regards to the AzAPI provider, once again came to the rescue with its flexibility to provide preview features support for Azure resources. Again, I am keen to see how the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AzAPI2AzureRM&lt;/code&gt; migration tool will work in this case when the features are added to the AzureRM provider and see how seamless the experience is. I will be looking into how I can create volumes from a backup and whether there is capability to create manual backups, similar to manual snapshots, using Terraform.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I hope this helps someone and that you find it informative. Please let me know your constructive feedback, as it’s always important. 🕵️‍♂️ That’s it for now—Hasta la vista! 🐱‍🏍&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Azure" /><category term="Terraform" /><category term="NetApp" /><category term="Azure NetApp Files" /><category term="ANF" /><category term="TFC" /><summary type="html">This article is demonstrating how to enable and create backup policies using the AzAPI Terraform provider by leveraging Terraform Cloud for it's deployment</summary></entry><entry><title type="html">Deploying Azure NetApp Files Preview features using Terraform AzAPI Provider</title><link href="http://localhost:4000/blog/azapi" rel="alternate" type="text/html" title="Deploying Azure NetApp Files Preview features using Terraform AzAPI Provider" /><published>2022-06-03T00:00:00+00:00</published><updated>2022-06-03T00:00:00+00:00</updated><id>http://localhost:4000/blog/azapi</id><content type="html" xml:base="http://localhost:4000/blog/azapi">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working on new content. 🚴‍♂️&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;I was working on a project that was using Azure NetApp Files and the idea was to test some of the preview features to understand how they can positively improve the capabilities and user experience. The infrastructure was provisioned using terraform. However, those preview features are not enabled yet on the &lt;a href=&quot;https://registry.terraform.io/providers/hashicorp/azurerm&quot;&gt;Terraform AzureRM provider&lt;/a&gt;. Some time back the solution if we had to use terraform was to use the ARM template wrapped with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;azurerm_template_deployment&lt;/code&gt; to make it terraform native which was not time consuming and not that great.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Azure" /><category term="Terraform" /><category term="NetApp" /><category term="Azure NetApp Files" /><category term="ANF" /><category term="TFC" /><summary type="html">This article is demonstrating how to enable and create backup policies using the AzAPI Terraform provider by leveraging Terraform Cloud for it's deployment</summary></entry><entry><title type="html">Deploying Azure NetApp Files Preview Features Using Terraform AzAPI Provider</title><link href="http://localhost:4000/blog/azapi" rel="alternate" type="text/html" title="Deploying Azure NetApp Files Preview Features Using Terraform AzAPI Provider" /><published>2022-06-03T00:00:00+00:00</published><updated>2022-06-03T00:00:00+00:00</updated><id>http://localhost:4000/blog/azapi</id><content type="html" xml:base="http://localhost:4000/blog/azapi">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;I assume based on community feedback and Microsoft investment, the provider has definitely improved to release new features and enable private preview ones in a faster cadence yet, there are projects that want or need to be able to have those features enabled as soon as they are released which usually you can deploy natively with ARM templates and/or Bicep.&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;p&gt;Microsoft has released recently the &lt;a href=&quot;https://registry.terraform.io/providers/Azure/azapi&quot;&gt;Terraform AzAPI provider&lt;/a&gt; which helps breaking that barrier in the IaC development process and enable us to deploy features that are not yet released in the AzureRM provider. The definition is quite clear and taken from the &lt;a href=&quot;https://github.com/Azure/terraform-provider-azapi&quot;&gt;provider github page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I was working on a project using Azure NetApp Files, aiming to test some preview features to understand how they can improve capabilities and user experience. The infrastructure was provisioned using Terraform. However, those preview features are not yet enabled in the &lt;a href=&quot;https://registry.terraform.io/providers/hashicorp/azurerm&quot;&gt;Terraform AzureRM provider&lt;/a&gt;. Previously, the workaround was to use ARM templates wrapped with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;azurerm_template_deployment&lt;/code&gt; to make it Terraform-native, which was not ideal.&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;The AzAPI provider is a very thin layer on top of the Azure ARM REST APIs. Use this new provider to authenticate to and manage Azure resources and functionality using the Azure Resource Manager APIs directly.&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Thanks to community feedback and Microsoft’s investment, the provider has improved to release new features and enable private preview ones at a faster cadence. Still, some projects need to enable features as soon as they are released, which is usually possible natively with ARM templates or Bicep.&lt;/p&gt;
 
-&lt;p&gt;After start playing with the provider, it felt like working with bicep in a way and I was able to deploy the preview features using the &lt;a href=&quot;https://registry.terraform.io/providers/Azure/azapi&quot;&gt;AzAPI provider&lt;/a&gt; and they were deployed successfully.👌&lt;/p&gt;
+&lt;p&gt;Microsoft recently released the &lt;a href=&quot;https://registry.terraform.io/providers/Azure/azapi&quot;&gt;Terraform AzAPI provider&lt;/a&gt;, which helps break that barrier in the IaC development process and enables us to deploy features not yet released in the AzureRM provider. The definition is clear, as taken from the &lt;a href=&quot;https://github.com/Azure/terraform-provider-azapi&quot;&gt;provider GitHub page&lt;/a&gt;:&lt;/p&gt;
 
-&lt;p class=&quot;notice--info&quot;&gt;The diagram below depicts the architecture to deploy for the test.
-&lt;img src=&quot;/assets\images\Blog\2022-06-03\anfhl.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;The AzAPI provider is a very thin layer on top of the Azure ARM REST APIs. Use this new provider to authenticate to and manage Azure resources and functionality using the Azure Resource Manager APIs directly.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;h3 id=&quot;azure-netapp-files-preview-features-️️&quot;&gt;Azure NetApp Files preview features 🕵️‍♀️&lt;/h3&gt;
-&lt;p&gt;There are two new features in &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/azure-netapp-files/configure-unix-permissions-change-ownership-mode&quot;&gt;Azure NetApp Files&lt;/a&gt; that are not yet released in the AzureRM provider. These features are related to the NFS Volume or dual-protocol volumes with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Unix security&lt;/code&gt; style providing more flexibility and control over the access to the NFS volumes:&lt;/p&gt;
+&lt;p&gt;After playing with the provider, it felt similar to working with Bicep, and I was able to deploy the preview features using the &lt;a href=&quot;https://registry.terraform.io/providers/Azure/azapi&quot;&gt;AzAPI provider&lt;/a&gt; successfully. 👌&lt;/p&gt;
+
+&lt;blockquote class=&quot;notice--info&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;br /&gt;
+The diagram below depicts the architecture to deploy for the test.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2022-06-03/anfhl.png&quot; alt=&quot;Azure NetApp Files Architecture&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;azure-netapp-files-preview-features-️️&quot;&gt;Azure NetApp Files Preview Features 🕵️‍♀️&lt;/h3&gt;
+
+&lt;p&gt;There are two new features in &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/azure-netapp-files/configure-unix-permissions-change-ownership-mode&quot;&gt;Azure NetApp Files&lt;/a&gt; that are not yet released in the AzureRM provider. These features are related to the NFS Volume or dual-protocol volumes with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Unix security&lt;/code&gt; style, providing more flexibility and control over access to the NFS volumes:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Unix Permissions: This feature allows you to specify change permissions for the mount path. The setting does not apply to the files under the mount path. By default those permissions are set to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0770&lt;/code&gt; which means read, write, &amp;amp; execute for owner and group only.&lt;/li&gt;
-  &lt;li&gt;Change of Ownership (Chown mode): This feature enables you to set the ownership management capabilities of files and directories&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Unix Permissions:&lt;/strong&gt; Allows you to specify change permissions for the mount path. The setting does not apply to files under the mount path. By default, permissions are set to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;0770&lt;/code&gt;, meaning read, write, and execute for owner and group only.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Change of Ownership (Chown mode):&lt;/strong&gt; Enables you to set the ownership management capabilities of files and directories.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Note&lt;/strong&gt;
-The Unix permissions you specify apply only for the volume mount point (root directory).
-You can modify the Unix permissions on the source volume but not on the destination volume that is in a cross-region replication configuration.&lt;/p&gt;
+&lt;blockquote class=&quot;notice--info&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;br /&gt;
+The Unix permissions you specify apply only to the volume mount point (root directory).&lt;br /&gt;
+You can modify the Unix permissions on the source volume but not on the destination volume in a cross-region replication configuration.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;h4 id=&quot;azure-netapp-files-resource-provider-configuration&quot;&gt;Azure NetApp Files resource provider configuration&lt;/h4&gt;
-&lt;p&gt;In order to test-drive those new capabilities we need to enable those new features. Depending on how you manage the Resource Providers, you can enable those features by adding the below to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;azurerm_resource_provider_registration&lt;/code&gt; resource:&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Note&lt;/strong&gt; This can take ~15 mins to complete. De-registering the resource provider can take longer than 30 mins to complete.&lt;/p&gt;
+&lt;h4 id=&quot;azure-netapp-files-resource-provider-configuration&quot;&gt;Azure NetApp Files Resource Provider Configuration&lt;/h4&gt;
 
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;azurerm_resource_provider_registration&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;anf&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Microsoft.NetApp&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;feature&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;       &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ANFChownMode&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;registered&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;feature&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;       &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ANFUnixPermissions&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;registered&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;To test these new capabilities, you need to enable the features. Depending on how you manage Resource Providers, you can enable these features by adding the following to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;azurerm_resource_provider_registration&lt;/code&gt; resource:&lt;/p&gt;
 
-&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Important&lt;/strong&gt; Adding or Removing Preview Features will re-register the Resource Provider if managed by Terraform.In addition, you cannot modify a resource provider that is not managed by terraform as expected.&lt;/p&gt;
+&lt;blockquote class=&quot;notice--info&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;br /&gt;
+This can take ~15 minutes to complete. De-registering the resource provider can take longer than 30 minutes.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;h3 id=&quot;terraform-configuration-&quot;&gt;Terraform Configuration 👨‍💻&lt;/h3&gt;
-&lt;p&gt;I am deploying ANF using a Module with the AzureRM provider and configuring the preview features using the AzAPI provider.&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;ANF&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Repo&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_Modules&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_ANF_Pool&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;variables&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ANF_Volume&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;variables&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;        
-        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;providers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;variables&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;tf&lt;/span&gt;
+&lt;div class=&quot;language-hcl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;azurerm_resource_provider_registration&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;anf&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Microsoft.NetApp&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;feature&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;       &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ANFChownMode&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;registered&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;feature&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;       &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ANFUnixPermissions&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;registered&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
+&lt;blockquote class=&quot;notice--info&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt;&lt;br /&gt;
+Adding or removing preview features will re-register the Resource Provider if managed by Terraform. In addition, you cannot modify a resource provider that is not managed by Terraform as expected.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;terraform-configuration-&quot;&gt;Terraform Configuration 👨‍💻&lt;/h3&gt;
+
+&lt;p&gt;I am deploying ANF using a module with the AzureRM provider and configuring the preview features using the AzAPI provider.&lt;/p&gt;
+
+&lt;div class=&quot;language-text highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ANF Repo
+    |_Modules
+        |_ANF_Pool
+            |_ main.tf
+            |_ variables.tf
+            |_ outputs.tf
+        |_ ANF_Volume
+            |_ main.tf
+            |_ variables.tf
+            |_ outputs.tf        
+    |_ main.tf
+    |_ providers.tf
+    |_ variables.tf
+    |_ outputs.tf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+
 &lt;h4 id=&quot;terraform-azapi-and-azurerm-providers&quot;&gt;Terraform AzAPI and AzureRM Providers&lt;/h4&gt;
-&lt;p&gt;I have declared the providers config to be used as below.&lt;/p&gt;
 
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;provider&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;azurerm&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;skip_provider_registration&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;features&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;p&gt;I have declared the providers configuration as below:&lt;/p&gt;
 
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;provider&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;azapi&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;div class=&quot;language-hcl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;provider&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;azurerm&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;skip_provider_registration&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;features&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;terraform&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;required_providers&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;azurerm&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;hashicorp/azurerm&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;~&amp;gt; 3.00&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;span class=&quot;nx&quot;&gt;provider&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;azapi&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;azapi&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;azure/azapi&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;span class=&quot;nx&quot;&gt;terraform&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;required_providers&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;azurerm&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;source&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;hashicorp/azurerm&quot;&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;version&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;~&amp;gt; 3.00&quot;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;azapi&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;azure/azapi&quot;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
 
 &lt;h3 id=&quot;deploying-the-azure-netapp-files-&quot;&gt;Deploying the Azure NetApp Files 👷&lt;/h3&gt;
-&lt;p&gt;I will deploy my ANF structure using the following resources&lt;/p&gt;
+
+&lt;p&gt;I will deploy my ANF structure using the following resources:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;ANF Account&lt;/li&gt;
   &lt;li&gt;Capacity Pool&lt;/li&gt;
   &lt;li&gt;Volume&lt;/li&gt;
-  &lt;li&gt;Export policy which contain one or more export rules that process each client access request&lt;/li&gt;
+  &lt;li&gt;Export policy containing one or more export rules that process each client access request&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;azurerm_netapp_account&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;analytics&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;cero-netappaccount&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;data.azurerm_resource_group.one.location&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;resource_group_name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;data.azurerm_resource_group.one.name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;div class=&quot;language-hcl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;azurerm_netapp_account&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;analytics&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;                &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;cero-netappaccount&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;            &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;azurerm_resource_group&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;one&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;resource_group_name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;azurerm_resource_group&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;one&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;analytics_pools&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;source&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;   &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;./modules/anf_pool&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;analytics_pools&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;source&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;./modules/anf_pool&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;for_each&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;local&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pools&lt;/span&gt;
 
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;for_each&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;local.pools&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;span class=&quot;nx&quot;&gt;account_name&lt;/span&gt;        &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;azurerm_netapp_account&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;analytics&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;resource_group_name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;azurerm_netapp_account&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;analytics&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;resource_group_name&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;            &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;azurerm_netapp_account&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;analytics&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;volumes&lt;/span&gt;             &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;each&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;tags&lt;/span&gt;                &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;tags&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;account_name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;        &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;azurerm_netapp_account.analytics.name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;resource_group_name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;azurerm_netapp_account.analytics.resource_group_name&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;            &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;azurerm_netapp_account.analytics.location&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;             &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;each.value&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;tags&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;                &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;var.tags&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets\images\Blog\2022-06-03\anf.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2022-06-03/anf.png&quot; alt=&quot;ANF Deployment Diagram&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
-&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Important&lt;/strong&gt; In order to create Azure NetApp Files, you need to request access to the region in which you are deploying via support ticket.&lt;/p&gt;
+&lt;blockquote class=&quot;notice--info&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt;&lt;br /&gt;
+To create Azure NetApp Files, you need to request access to the region in which you are deploying via a support ticket.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;h4 id=&quot;azapi-update-resource-configuration&quot;&gt;AzAPI update resource configuration&lt;/h4&gt;
-&lt;p&gt;Given I already deployed my ANF Account, I will use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;azapi_update_resource&lt;/code&gt; as it allows me to manage the properties I need from the existing ANF resource properties. It does use the same auth methods as the AzureRM provider.&lt;/p&gt;
+&lt;hr /&gt;
+
+&lt;h4 id=&quot;azapi-update-resource-configuration&quot;&gt;AzAPI Update Resource Configuration&lt;/h4&gt;
+
+&lt;p&gt;Given I already deployed my ANF Account, I use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;azapi_update_resource&lt;/code&gt; to manage the properties I need from the existing ANF resource properties. It uses the same authentication methods as the AzureRM provider.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Make sure you install the &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=azapi-vscode.azapi&quot;&gt;Terraform AzAPI provider extension&lt;/a&gt; in VSCode, as it will make life easier with the intellisense completion.&lt;/li&gt;
+  &lt;li&gt;Make sure you install the &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=azapi&quot;&gt;Terraform AzAPI provider extension&lt;/a&gt; in VS Code, as it will make life easier with IntelliSense completion.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;azapi_update_resource&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;vol_update&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2021-10-01&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;resource_id&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;module.analytics_pools&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;pool1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.volumes.volume&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.volume.id&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;body&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;jsonencode(&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;properties&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;unixPermissions&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0740&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;exportPolicy&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-        &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;rules&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-          &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;RuleIndex&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-          &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;chownMode&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;unRestricted&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-        &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-      &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-    
-  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-hcl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;azapi_update_resource&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;vol_update&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt;        &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Microsoft.NetApp/netAppAccounts/capacityPools/volumes@2021-10-01&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;resource_id&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;analytics_pools&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;pool1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;volumes&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;volume1&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;volume&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;id&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;body&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;jsonencode&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;properties&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;unixPermissions&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;0740&quot;&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;exportPolicy&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;rules&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[{&lt;/span&gt;
+          &lt;span class=&quot;nx&quot;&gt;RuleIndex&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;,&lt;/span&gt;
+          &lt;span class=&quot;nx&quot;&gt;chownMode&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;unRestricted&quot;&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}]&lt;/span&gt;
+      &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets\images\Blog\2022-06-03\anfcw.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2022-06-03/anfcw.png&quot; alt=&quot;ANF Volume Update&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h4 id=&quot;azapi-to-azurerm-migration&quot;&gt;AzAPI to AzureRM Migration&lt;/h4&gt;
-&lt;p&gt;I did try to see how this tool would work. However, as per below those settings are still not available in the AzureRM provider. Hence, I have to wait to test this with ANF when those features are available in the AzureRM provider. More info about this tool &lt;a href=&quot;https://docs.microsoft.com/en-us/azure/developer/terraform/overview-azapi-provider#azapi2azurerm-migration-tool&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets\images\Blog\2022-06-03\azapitoazrm.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;I tried to see how this tool would work. However, as shown below, those settings are still not available in the AzureRM provider. I will have to wait to test this with ANF when those features are available in the AzureRM provider. More info about this tool [here][az2rm].&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2022-06-03/azapitoazrm.png&quot; alt=&quot;AzAPI to AzureRM Migration&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h3 id=&quot;summary-&quot;&gt;Summary 📻&lt;/h3&gt;
 
-&lt;p&gt;AzAPI provider definitely allow us to manage Azure resources and functionality using the Azure ARM REST APIs directly without having to make complex deployments to be able to leverage terraform. It give us the flexibility to manage zero day feature support for Azure resources.
-This is a great example of how to leverage the AzAPI provider to manage Azure resources and allow me to increase agility by been able to test new features easily if invested in terraform.
-Azure NetApp files keeps improving and adding new features that will make the best choice for your data management needs, and I am excited to see how this will be used in the future. I did find a bug in the Azure Portal UI when changing the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chownMode&lt;/code&gt; property from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;restricted&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unRestricted&lt;/code&gt;. This property was not changed in the UI. However, it was in the Azure API. The other way around &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unRestricted&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;restricted&lt;/code&gt; works fine.&lt;/p&gt;
+&lt;p&gt;The AzAPI provider definitely allows us to manage Azure resources and functionality using the Azure ARM REST APIs directly, without having to make complex deployments to leverage Terraform. It gives us the flexibility to manage zero-day feature support for Azure resources.&lt;/p&gt;
 
-&lt;p&gt;I am so keen to see how the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AzAPI2AzureRM&lt;/code&gt; migration tool will work in this case when the features are added to the AzureRM provider and see how seamless the experience is.&lt;/p&gt;
+&lt;p&gt;This is a great example of how to leverage the AzAPI provider to manage Azure resources and increase agility by being able to test new features easily if you are invested in Terraform. Azure NetApp Files keeps improving and adding new features, making it an excellent choice for your data management needs. I am excited to see how this will be used in the future.&lt;/p&gt;
 
-&lt;p&gt;I do hope this helps someone and that you find it informative,, so please let me know your constructive feedback as it’s always important🕵️‍♂️,, That’s it for now,,, Hasta la vista🐱‍🏍!!!&lt;/p&gt;
+&lt;p&gt;I did find a bug in the Azure Portal UI when changing the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chownMode&lt;/code&gt; property from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;restricted&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unRestricted&lt;/code&gt;. This property was not changed in the UI, but it was in the Azure API. The other way around (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;unRestricted&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;restricted&lt;/code&gt;) works fine.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I am eager to see how the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;AzAPI2AzureRM&lt;/code&gt; migration tool will work when these features are added to the AzureRM provider and how seamless the experience will be.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Azure" /><category term="Terraform" /><category term="NetApp" /><category term="Azure NetApp Files" /><summary type="html">This article is demonstrating how to enable preview features using the AzAPI terraform provider</summary></entry><entry><title type="html">Federating Google Cloud Identities with Azure Active Directory</title><link href="http://localhost:4000/blog/Federation" rel="alternate" type="text/html" title="Federating Google Cloud Identities with Azure Active Directory" /><published>2022-02-15T00:00:00+00:00</published><updated>2022-02-15T00:00:00+00:00</updated><id>http://localhost:4000/blog/Federation</id><content type="html" xml:base="http://localhost:4000/blog/Federation">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I hope this helps someone and that you find it informative. Please let me know your constructive feedback, as it’s always important. 🕵️‍♂️ That’s it for now—Hasta la vista! 🐱‍🏍&lt;/p&gt;
 
-&lt;p&gt;I have started working a bit on GCP and usually the first challenge you have when doing public cloud is identity, GCP allows you to federate from multiple sources and depending on your environment you got some good options when you have some Microsoft stack like Active Directory. In my case, I wanted to test when the identities are already in Azure AD and you want to leverage the already Enterprise level features that AAD offers to establish a trust with Google Cloud Identity.  This allow us to do the below without much effort.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working on new content. 🚴‍♂️&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Azure" /><category term="Terraform" /><category term="NetApp" /><category term="Azure NetApp Files" /><summary type="html">This article demonstrates how to enable preview features using the AzAPI Terraform provider.</summary></entry><entry><title type="html">Federating Google Cloud Identities with Azure Active Directory</title><link href="http://localhost:4000/blog/Federation" rel="alternate" type="text/html" title="Federating Google Cloud Identities with Azure Active Directory" /><published>2022-02-15T00:00:00+00:00</published><updated>2022-02-15T00:00:00+00:00</updated><id>http://localhost:4000/blog/Federation</id><content type="html" xml:base="http://localhost:4000/blog/Federation">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;I recently started working with GCP, and as with most public cloud platforms, the first challenge is identity management. GCP allows federation from multiple sources, and if you have a Microsoft stack like Active Directory, you have some great options. In my case, I wanted to test scenarios where identities already exist in Azure AD and leverage its enterprise-level features to establish trust with Google Cloud Identity. This allows us to do the following with minimal effort:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Provision users, groups and group memberships.
-The connector allows you to provision users and groups that are already in Azure AD to provision them in Google Cloud Identity.&lt;/li&gt;
-  &lt;li&gt;Single Sign-On (SSO)
-  Google Cloud delegates the authentication to Azure AD by using SAML&lt;/li&gt;
-  &lt;li&gt;Conditional Access Policies&lt;/li&gt;
-  &lt;li&gt;Multifactor Authentication&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Provision users, groups, and group memberships:&lt;/strong&gt;&lt;br /&gt;
+The connector allows you to provision users and groups that are already in Azure AD to Google Cloud Identity.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Single Sign-On (SSO):&lt;/strong&gt;&lt;br /&gt;
+Google Cloud delegates authentication to Azure AD using SAML.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Conditional Access Policies&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Multifactor Authentication&lt;/strong&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Note&lt;/strong&gt; 
-Unfortunately, there is a gotcha as Microsoft currently does not allow for the ability to sync nested groups through Enterprise Applications. Usually, most enterprises do have groups nested in groups and you cannot sync them through the connector.&lt;/p&gt;
+&lt;blockquote class=&quot;notice--info&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt;&lt;br /&gt;
+Unfortunately, there is a limitation: Microsoft currently does not allow syncing nested groups through Enterprise Applications. Most enterprises use nested groups, but you cannot sync them through the connector.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;The diagram below depicts the flow process to achieve the provisioning as well as Single Sign-On. I have used one Enterprise Application for both provisioning and Single-Sign-On.
-&lt;img src=&quot;/assets\images\Blog\2022-02-15\identity.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;The diagram below depicts the flow process for provisioning and Single Sign-On. I used one Enterprise Application for both provisioning and SSO.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2022-02-15/identity.png&quot; alt=&quot;Google Cloud Identity Federation Flow&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h3 id=&quot;google-requirements&quot;&gt;Google Requirements&lt;/h3&gt;
-&lt;p&gt;You need a to create an user account in the &lt;a href=&quot;https://admin.google.com/&quot;&gt;GCP Admin Console&lt;/a&gt; which for my PoC it is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ceroprov@johnalfaro.com&lt;/code&gt; and it needs to have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;super-admin&lt;/code&gt; permissions. This account will be use to authorize the creation of groups and users in the GCP side.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets\images\Blog\2022-02-15\prov.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;You need to create a user account in the &lt;a href=&quot;https://admin.google.com/&quot;&gt;GCP Admin Console&lt;/a&gt;. For my PoC, it is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ceroprov@johnalfaro.com&lt;/code&gt;, and it needs &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;super-admin&lt;/code&gt; permissions. This account will authorize the creation of groups and users on the GCP side.&lt;/p&gt;
 
-&lt;h3 id=&quot;azure-ad-requirements&quot;&gt;Azure AD requirements&lt;/h3&gt;
-&lt;p&gt;There are few settings to be configured in Azure AD to enable the Enterprise Application to handle both user provisioning and single sign-on. Make sure you had the correct permissions to do so. The following roles from higher to lower permisssions to achieve this task are: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Global Administrator&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Cloud Application Administrator&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Application Administrator&lt;/code&gt;.
-&lt;img src=&quot;/assets\images\Blog\2022-02-15\entapp.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2022-02-15/prov.png&quot; alt=&quot;GCP Admin Console&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;azure-ad-requirements&quot;&gt;Azure AD Requirements&lt;/h3&gt;
+
+&lt;p&gt;There are a few settings to configure in Azure AD to enable the Enterprise Application for both user provisioning and SSO. Ensure you have the correct permissions. The following roles (from highest to lowest) can perform these tasks: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Global Administrator&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Cloud Application Administrator&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Application Administrator&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2022-02-15/entapp.png&quot; alt=&quot;Azure Enterprise Application&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Create the Google Cloud Connector Enterprise Application. Search for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Google Cloud&lt;/code&gt; and there is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Google Cloud/G Suite Connector by Microsoft &lt;/code&gt; The following settings are required from the properties.
+  &lt;li&gt;&lt;strong&gt;Create the Google Cloud Connector Enterprise Application:&lt;/strong&gt;&lt;br /&gt;
+Search for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Google Cloud&lt;/code&gt; and select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Google Cloud/G Suite Connector by Microsoft&lt;/code&gt;. Configure the following:
     &lt;ul&gt;
-      &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Enabled for users&lt;/code&gt; to sign-in to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Yes&lt;/code&gt;.&lt;/li&gt;
-      &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;User assignment&lt;/code&gt; required to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Yes&lt;/code&gt;.&lt;/li&gt;
+      &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Enabled for users to sign-in&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Yes&lt;/code&gt;.&lt;/li&gt;
+      &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;User assignment required&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Yes&lt;/code&gt;.&lt;/li&gt;
       &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Visible to users&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;No&lt;/code&gt;.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;Set the following settings in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;provisioning settings&lt;/code&gt;
+  &lt;li&gt;&lt;strong&gt;Provisioning Settings:&lt;/strong&gt;
     &lt;ul&gt;
       &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Provisioning Mode&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Automatic&lt;/code&gt;.&lt;/li&gt;
-      &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Admin Credentials&lt;/code&gt; then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Authorize&lt;/code&gt;.
-I used the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ceroprov@johnalfaro.com&lt;/code&gt; account to authorize the application. By clicking, allow this will confirm access to the GCP Cloud Identity API.
-&lt;img src=&quot;/assets\images\Blog\2022-02-15\aad_to_gcp.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/li&gt;
+      &lt;li&gt;Set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Admin Credentials&lt;/code&gt; and then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Authorize&lt;/code&gt;.&lt;br /&gt;
+Use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ceroprov@johnalfaro.com&lt;/code&gt; account to authorize the application. Allowing this confirms access to the GCP Cloud Identity API.
+&lt;img src=&quot;/assets/images/Blog/2022-02-15/aad_to_gcp.png&quot; alt=&quot;Provisioning Settings&quot; class=&quot;align-center&quot; /&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;Test the connection to make sure you can auth to the API.
-&lt;img src=&quot;/assets\images\Blog\2022-02-15\testcon.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Test the connection&lt;/strong&gt; to ensure you can authenticate to the API.
+&lt;img src=&quot;/assets/images/Blog/2022-02-15/testcon.png&quot; alt=&quot;Test Connection&quot; class=&quot;align-center&quot; /&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p class=&quot;notice--info&quot;&gt;&lt;strong&gt;Important&lt;/strong&gt; Always keep security in mind and use credentials with less privileged access.&lt;/p&gt;
+&lt;blockquote class=&quot;notice--info&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;Important:&lt;/strong&gt;&lt;br /&gt;
+Always keep security in mind and use credentials with the least privileged access.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;h3 id=&quot;configure-usergroups-provisioning&quot;&gt;Configure User/Groups Provisioning&lt;/h3&gt;
-&lt;p&gt;In Azure AD we configure the mapping of users and groups to the GCP Cloud Identity API.&lt;/p&gt;
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;configure-usergroup-provisioning&quot;&gt;Configure User/Group Provisioning&lt;/h3&gt;
+
+&lt;p&gt;In Azure AD, configure the mapping of users and groups to the GCP Cloud Identity API.&lt;/p&gt;
 
 &lt;h4 id=&quot;user-provisioning&quot;&gt;User Provisioning&lt;/h4&gt;
-&lt;p&gt;I have used the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UPN&lt;/code&gt; to configure the mapping of users. This is the unique identifier of the user in Azure AD, so cannot go wrong there 🤠. The &lt;a href=&quot;https://cloud.google.com/architecture/identity/federating-gcp-with-azure-ad-configuring-provisioning-and-single-sign-on#configure_user_provisioning&quot;&gt;GCP documentation&lt;/a&gt; provides what can be used to configure the mapping.&lt;/p&gt;
+
+&lt;p&gt;I used the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;UPN&lt;/code&gt; to configure user mapping. This is the unique identifier in Azure AD. The &lt;a href=&quot;https://cloud.google.com/architecture/identity/federating-gcp-with-azure-ad-configuring-provisioning-and-single-sign-on#configure_user_provisioning&quot;&gt;GCP documentation&lt;/a&gt; provides details on mapping.&lt;/p&gt;
+
 &lt;ol&gt;
-  &lt;li&gt;Under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attribute mapping&lt;/code&gt; select row &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;surname&lt;/code&gt; and set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Default value if null&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attribute mapping&lt;/code&gt; select row &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;givenName&lt;/code&gt; and set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Default value if null&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attribute mapping&lt;/code&gt;, select the row &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;surname&lt;/code&gt; and set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Default value if null&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attribute mapping&lt;/code&gt;, select the row &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;givenName&lt;/code&gt; and set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Default value if null&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_&lt;/code&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h4 id=&quot;group-provisioning&quot;&gt;Group Provisioning&lt;/h4&gt;
-&lt;p&gt;I have used the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Name&lt;/code&gt; to configure the mapping of groups. The &lt;a href=&quot;https://cloud.google.com/architecture/identity/federating-gcp-with-azure-ad-configuring-provisioning-and-single-sign-on#configure_user_provisioning&quot;&gt;GCP documentation&lt;/a&gt; recommends to edit the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mail&lt;/code&gt; attribute in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attribute mappings&lt;/code&gt; and change mapping type to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Expression&lt;/code&gt; and set the expression as below. Where I set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;johnalfaro.com&lt;/code&gt;, please set your registered domain.&lt;/p&gt;
 
-&lt;p&gt;I have also setup the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sync only assigned users and groups&lt;/code&gt; as I do not want to sync all users and groups which is definitely recommended for any organization.&lt;/p&gt;
+&lt;p&gt;I used the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Name&lt;/code&gt; to configure group mapping. The &lt;a href=&quot;https://cloud.google.com/architecture/identity/federating-gcp-with-azure-ad-configuring-provisioning-and-single-sign-on#configure_user_provisioning&quot;&gt;GCP documentation&lt;/a&gt; recommends editing the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mail&lt;/code&gt; attribute in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attribute mappings&lt;/code&gt;, changing the mapping type to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Expression&lt;/code&gt;, and setting the expression as below. Replace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;johnalfaro.com&lt;/code&gt; with your registered domain.&lt;/p&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;Join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;@&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;NormalizeDiacritics&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;StripSpaces&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displayName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;johnalfaro&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;)
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;img src=&quot;/assets\images\Blog\2022-02-15\mapp.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;I also set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sync only assigned users and groups&lt;/code&gt; to avoid syncing all users and groups, which is recommended for any organization.&lt;/p&gt;
 
-&lt;h4 id=&quot;user-and-groups-syncing&quot;&gt;User and Groups Syncing&lt;/h4&gt;
-&lt;p&gt;Now it’s time to test-drive the connector. Make sure you add some relevant users and groups you want to sync to GCP by adding them under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;manage&lt;/code&gt; then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user and groups&lt;/code&gt;. After this, you have two options to sync the users and groups.&lt;/p&gt;
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;no&quot;&gt;Join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;@&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;NormalizeDiacritics&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;StripSpaces&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displayName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])),&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;johnalfaro.com&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2022-02-15/mapp.png&quot; alt=&quot;Group Mapping&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h4 id=&quot;user-and-group-syncing&quot;&gt;User and Group Syncing&lt;/h4&gt;
+
+&lt;p&gt;Now it’s time to test the connector. Add relevant users and groups you want to sync to GCP under &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Manage &amp;gt; Users and Groups&lt;/code&gt;. You have two options to sync:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;https://docs.microsoft.com/en-us/azure/active-directory/app-provisioning/provision-on-demand&quot;&gt;Provision on demand&lt;/a&gt;: This is kind of a manual process, you can use it to test, troubleshoot and also validate expressions set in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;attribute mappings&lt;/code&gt;
-&lt;img src=&quot;/assets\images\Blog\2022-02-15\provondemand.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/li&gt;
-  &lt;li&gt;Automatic Provisioning: This is the recommended option; it will provision the users and groups in the GCP Cloud Identity API. There is an initial provisioning cycle, followed by periodic incremental cycles that runs every 40 min.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://docs.microsoft.com/en-us/azure/active-directory/app-provisioning/provision-on-demand&quot;&gt;Provision on demand&lt;/a&gt;:&lt;/strong&gt;&lt;br /&gt;
+This manual process is useful for testing, troubleshooting, and validating attribute mapping expressions.
+&lt;img src=&quot;/assets/images/Blog/2022-02-15/provondemand.png&quot; alt=&quot;Provision on Demand&quot; class=&quot;align-center&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Automatic Provisioning:&lt;/strong&gt;&lt;br /&gt;
+This is the recommended option. It provisions users and groups in the GCP Cloud Identity API. There is an initial provisioning cycle, followed by incremental cycles every 40 minutes.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h4 id=&quot;monitoring&quot;&gt;Monitoring&lt;/h4&gt;
-&lt;p&gt;Luckily we can monitor the provisioning process OOB. The logs provide details about all operations run by the user provisioning service, including provisioning status for individual users and groups.
-&lt;img src=&quot;/assets\images\Blog\2022-02-15\logs.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;h3 id=&quot;single-sign-on-configuration&quot;&gt;Single Sign-On configuration&lt;/h3&gt;
-&lt;p&gt;I have followed the GCP documentation that was easy to follow to setup SSO. The configuration is as follows.&lt;/p&gt;
+&lt;h4 id=&quot;monitoring&quot;&gt;Monitoring&lt;/h4&gt;
+
+&lt;p&gt;You can monitor the provisioning process out-of-the-box. The logs provide details about all operations run by the user provisioning service, including provisioning status for individual users and groups.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2022-02-15/logs.png&quot; alt=&quot;Provisioning Logs&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;single-sign-on-configuration&quot;&gt;Single Sign-On Configuration&lt;/h3&gt;
+
+&lt;p&gt;I followed the GCP documentation to set up SSO. The configuration is as follows:&lt;/p&gt;
+
 &lt;ol&gt;
-  &lt;li&gt;Edit the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Basic SAML Configuration&lt;/code&gt; with the following settings:
+  &lt;li&gt;Edit the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Basic SAML Configuration&lt;/code&gt; with:
     &lt;ul&gt;
-      &lt;li&gt;Identifier (Entity ID): google.com&lt;/li&gt;
-      &lt;li&gt;Reply URL: https://www.google.com/&lt;/li&gt;
-      &lt;li&gt;Sign on URL: https://www.google.com/a/johnalfaro/ServiceLogin?continue=https://console.cloud.google.com/, replacing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;johnalfaro&lt;/code&gt; with your Domain Name.&lt;/li&gt;
+      &lt;li&gt;Identifier (Entity ID): &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;google.com&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Reply URL: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://www.google.com/&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Sign on URL: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://www.google.com/a/johnalfaro/ServiceLogin?continue=https://console.cloud.google.com/&lt;/code&gt; (replace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;johnalfaro&lt;/code&gt; with your domain name)&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;Download the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Certificate(base64)&lt;/code&gt; certificate from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SAML Signing Certificate&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;In the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Attributes &amp;amp; Claims&lt;/code&gt; section, I have selected &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user.userprincipalname&lt;/code&gt; as the Unique identifier.&lt;/li&gt;
-  &lt;li&gt;In the &lt;a href=&quot;https://admin.google.com/&quot;&gt;GCP Admin Console&lt;/a&gt; login as a Super-admin user and navigate to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Security &amp;gt; Authentication &amp;gt; SSO with third-party IdP&lt;/code&gt; then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add SSO profile&lt;/code&gt;. Set to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;enabled&lt;/code&gt; the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Setup SSO with third party identity provider&lt;/code&gt;.
+  &lt;li&gt;Download the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Certificate (Base64)&lt;/code&gt; from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;SAML Signing Certificate&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;In &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Attributes &amp;amp; Claims&lt;/code&gt;, select &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;user.userprincipalname&lt;/code&gt; as the Unique identifier.&lt;/li&gt;
+  &lt;li&gt;In the &lt;a href=&quot;https://admin.google.com/&quot;&gt;GCP Admin Console&lt;/a&gt;, log in as a Super-admin and navigate to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Security &amp;gt; Authentication &amp;gt; SSO with third-party IdP&lt;/code&gt; then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Add SSO profile&lt;/code&gt;. Enable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Setup SSO with third party identity provider&lt;/code&gt; and configure:
     &lt;ul&gt;
-      &lt;li&gt;Sign-in page URL: Copy the URL from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Set up Google Cloud&lt;/code&gt; card, in the Google  Enterprise Application SSO Configuration.&lt;/li&gt;
-      &lt;li&gt;Sign-out page URL: https://login.microsoftonline.com/common/wsfederation?wa=wsignout1.0.&lt;/li&gt;
-      &lt;li&gt;Change password URL: https://account.activedirectory.windowsazure.com/changepassword.aspx, this will depends if you are using SSPR(Self-service Password Reset).&lt;/li&gt;
+      &lt;li&gt;Sign-in page URL: Copy from the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Set up Google Cloud&lt;/code&gt; card in the Google Enterprise Application SSO Configuration.&lt;/li&gt;
+      &lt;li&gt;Sign-out page URL: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://login.microsoftonline.com/common/wsfederation?wa=wsignout1.0&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Change password URL: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://account.activedirectory.windowsazure.com/changepassword.aspx&lt;/code&gt; (depends on SSPR usage)&lt;/li&gt;
       &lt;li&gt;Upload the certificate in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;verification certificate&lt;/code&gt; field.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets\images\Blog\2022-02-15\sso.png&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2022-02-15/sso.png&quot; alt=&quot;SSO Configuration&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;the-test-drive️&quot;&gt;The Test-Drive🦸‍♂️&lt;/h3&gt;
-&lt;p&gt;After setting everything up I have tested the connector by adding some users and groups to get them synced to GCP, as well as, login to the &lt;a href=&quot;https://console.cloud.google.com/&quot;&gt;GCP Console&lt;/a&gt;, which will redirect me to Azure AD  to sign-in and after successful sign-in I will be redirected to the GCP Console as per below.👨‍💻&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets\images\Blog\2022-02-15\sso_gcp.gif&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;h3 id=&quot;the-test-drive-️&quot;&gt;The Test-Drive 🦸‍♂️&lt;/h3&gt;
+
+&lt;p&gt;After setup, I tested the connector by adding users and groups to sync to GCP and logging in to the &lt;a href=&quot;https://console.cloud.google.com/&quot;&gt;GCP Console&lt;/a&gt;. This redirected me to Azure AD for sign-in, and after successful authentication, I was redirected to the GCP Console.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2022-02-15/sso_gcp.gif&quot; alt=&quot;SSO Test&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h3 id=&quot;summary&quot;&gt;Summary&lt;/h3&gt;
-&lt;p&gt;The Google documentation was easy to follow and the setup was simple in a demo environment. However, I did have some issues with the provisioning part as every now and then it was being quarantined while using the automatic provisioning, I was getting the email notification. However, at an Enterprise level I will definitely prefer to provision users and groups in GCP using the API. This will ensure that the users and groups are synced effectively to GCP. In addition, nested groups will not be an issue as unlike the provisioning feature in Azure AD.&lt;/p&gt;
 
-&lt;p&gt;I did have some fun as well writing in markdown and getting &lt;a href=&quot;https://copilot.github.com/&quot;&gt;Github Copilot&lt;/a&gt; helping me to write the blog which to my surprise was accurate. I guess I may have less typos this time around.👨‍💻&lt;/p&gt;
+&lt;p&gt;The Google documentation was easy to follow, and the setup was straightforward in a demo environment. I did encounter some issues with provisioning, such as occasional quarantining during automatic provisioning (with email notifications). At the enterprise level, I would prefer to provision users and groups in GCP using the API to ensure effective syncing, especially since nested groups are not supported by Azure AD provisioning.&lt;/p&gt;
 
-&lt;p&gt;I do hope this helps someone and that you find it informative,, so please let me know your constructive feedback as it’s always important🕵️‍♂️,, That’s it for now,,, Hasta la vista🐱‍🏍!!!&lt;/p&gt;
+&lt;p&gt;I also enjoyed writing this in markdown and using &lt;a href=&quot;https://copilot.github.com/&quot;&gt;GitHub Copilot&lt;/a&gt; to help draft the blog, which reduced typos. 👨‍💻&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I hope this helps someone and that you find it informative. Please let me know your constructive feedback, as it’s always important. 🕵️‍♂️ That’s it for now—Hasta la vista! 🐱‍🏍&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Azure Active Directory" /><category term="Google Cloud" /><category term="Identity Federation" /><summary type="html">This article is demonstrating how to map Azure AD identities to Google Cloud Identity.</summary></entry><entry><title type="html">Continuous Deployment Recipe using GitHub Actions, Checkov and Terraform Cloud(CLI)</title><link href="http://localhost:4000/blog/GH_CICD" rel="alternate" type="text/html" title="Continuous Deployment Recipe using GitHub Actions, Checkov and Terraform Cloud(CLI)" /><published>2021-09-01T00:00:00+00:00</published><updated>2021-09-01T00:00:00+00:00</updated><id>http://localhost:4000/blog/GH_CICD</id><content type="html" xml:base="http://localhost:4000/blog/GH_CICD">&lt;meta name=&quot;image&quot; property=&quot;og:image&quot; content=&quot;https://blog.johnalfaro.com/assets/images/splash.jpg&quot; /&gt;
+&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working on new content. 🚴‍♂️&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Azure Active Directory" /><category term="Google Cloud" /><category term="Identity Federation" /><summary type="html">This article demonstrates how to map Azure AD identities to Google Cloud Identity.</summary></entry><entry><title type="html">Continuous Deployment Recipe using GitHub Actions, Checkov and Terraform Cloud(CLI)</title><link href="http://localhost:4000/blog/GH_CICD" rel="alternate" type="text/html" title="Continuous Deployment Recipe using GitHub Actions, Checkov and Terraform Cloud(CLI)" /><published>2021-09-01T00:00:00+00:00</published><updated>2021-09-01T00:00:00+00:00</updated><id>http://localhost:4000/blog/GH_CICD</id><content type="html" xml:base="http://localhost:4000/blog/GH_CICD">&lt;meta name=&quot;image&quot; property=&quot;og:image&quot; content=&quot;https://blog.johnalfaro.com/assets/images/splash.jpg&quot; /&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
@@ -1551,119 +1646,134 @@ Given that now Bicep support the creation of modules it makes it even more appea
 
 &lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Azure" /><summary type="html">This article provides an idea on how to leverage Terraform Cloud to deploy your Infrastructure as code in Azure</summary></entry><entry><title type="html">Terraform 13 - for_each - Test Drive</title><link href="http://localhost:4000/blog/T13-for_each" rel="alternate" type="text/html" title="Terraform 13 - for_each - Test Drive" /><published>2020-08-26T00:00:00+00:00</published><updated>2020-08-26T00:00:00+00:00</updated><id>http://localhost:4000/blog/T13-for_each</id><content type="html" xml:base="http://localhost:4000/blog/T13-for_each">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;🚀Terraform 0.13 is the new trend in the Terraform world IaC and one of the new features is the most wanted for_each🚀.&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;p&gt;I have all my Azure infrastructure currently deployed using Terraform 12. Given we already got v13 which judging for the number indicates it maybe unlucky, but 2020 cannot be beaten with the unlucky connotation😂&lt;/p&gt;
+&lt;h2 id=&quot;-terraform-013-the-for_each-feature&quot;&gt;🚀 Terraform 0.13: The for_each Feature&lt;/h2&gt;
 
-&lt;p&gt;## Why a for_each is great for modules&lt;/p&gt;
+&lt;p&gt;Terraform 0.13 is the latest trend in the Terraform IaC world, and one of its most anticipated features is the new &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for_each&lt;/code&gt; capability.&lt;/p&gt;
 
-&lt;p&gt;This allows me to define multiple instances in one block by using a map and of course leveraging the module… so the amount of code is reduced considerably&lt;/p&gt;
+&lt;p&gt;I have all my Azure infrastructure currently deployed using Terraform 12. Now that version 13 is available (which, judging by the number, might seem unlucky—but 2020 has already set the bar for “unlucky”!), it’s time to explore the new features. 😄&lt;/p&gt;
 
-&lt;p&gt;I decided to start modifying my infrastructure to take advantage of this new features and today I started with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for_each&lt;/code&gt; one you can refer to &lt;a href=&quot;https://github.com/hashicorp/terraform/blob/master/CHANGELOG.md&quot;&gt;Terraform 13 Changelog&lt;/a&gt; to find more information about those new changes.&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;p&gt;In this case I have a Resource group module which I was calling &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;n&lt;/code&gt; times the number of Resource Groups I was creating for my infrastructure which in my case it was 9. Something like this 🔽&lt;/p&gt;
+&lt;h2 id=&quot;why-is-for_each-great-for-modules&quot;&gt;Why Is for_each Great for Modules?&lt;/h2&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;rg-dmz&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;source&lt;/span&gt;             &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;../modules/resource_group&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;name_suffix&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;dmz&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt;           &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;location&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;full_env_code&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;full_env_code&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;create&lt;/span&gt;             &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;enable_delete_lock&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
+&lt;p&gt;The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for_each&lt;/code&gt; feature allows you to define multiple instances in a single block by using a map, leveraging modules to reduce the amount of code significantly.&lt;/p&gt;
+
+&lt;p&gt;I decided to start modifying my infrastructure to take advantage of these new features, beginning with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for_each&lt;/code&gt;. You can refer to the &lt;a href=&quot;https://github.com/hashicorp/terraform/blob/master/CHANGELOG.md&quot;&gt;Terraform 13 Changelog&lt;/a&gt; for more information about these changes.&lt;/p&gt;
+
+&lt;p&gt;Previously, I had a resource group module that I called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;n&lt;/code&gt; times—once for each resource group I needed (in my case, nine). It looked like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-hcl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;rg-dmz&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;source&lt;/span&gt;             &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;../modules/resource_group&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name_suffix&lt;/span&gt;        &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;dmz&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;           &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;full_env_code&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;local&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;full_env_code&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;create&lt;/span&gt;             &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;enable_delete_lock&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;rg-app&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;source&lt;/span&gt;             &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;../modules/resource_group&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;name_suffix&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;app&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt;           &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;location&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;full_env_code&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;full_env_code&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;create&lt;/span&gt;             &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;enable_delete_lock&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;rg-app&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;source&lt;/span&gt;             &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;../modules/resource_group&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name_suffix&lt;/span&gt;        &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;app&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;           &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;full_env_code&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;local&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;full_env_code&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;create&lt;/span&gt;             &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;enable_delete_lock&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
-&lt;span class=&quot;nf&quot;&gt;.&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
-&lt;span class=&quot;nf&quot;&gt;.&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;times&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;RG&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;required&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# ... repeated n times for each RG&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h2 id=&quot;modifications-required&quot;&gt;Modifications required&lt;/h2&gt;
 
-&lt;p&gt;I started modifying my code to be more &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;efficient&quot;&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&quot;dynamic&quot;&lt;/code&gt; by modifying my current deployment and leveraging the for_each as per below. This allows me to define multiple intances in one block by using a map and of course using leveraging the module… so the amount of code is reduced considerably. More information about using &lt;a href=&quot;https://www.terraform.io/docs/configuration/resources.html#for_each-multiple-resource-instances-defined-by-a-map-or-set-of-strings&quot;&gt;for_each&lt;/a&gt;&lt;/p&gt;
+&lt;hr /&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;rgs&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;for_each&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;h2 id=&quot;modifications-required&quot;&gt;Modifications Required&lt;/h2&gt;
 
-    &lt;span class=&quot;n&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dmz&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;dmz&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;app&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;services&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;services&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;management&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;management&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;data&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;network&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;network&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packer&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;packer&quot;&lt;/span&gt;
+&lt;p&gt;To make my code more &lt;strong&gt;efficient&lt;/strong&gt; and &lt;strong&gt;dynamic&lt;/strong&gt;, I updated my deployment to leverage &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;for_each&lt;/code&gt;. This allows me to define multiple instances in one block using a map, reducing code duplication. More information about using &lt;a href=&quot;https://www.terraform.io/docs/configuration/resources.html#for_each-multiple-resource-instances-defined-by-a-map-or-set-of-strings&quot;&gt;for_each&lt;/a&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-hcl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;rgs&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;for_each&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;dmz&lt;/span&gt;        &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;dmz&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;app&lt;/span&gt;        &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;app&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;services&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;services&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;management&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;management&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;data&lt;/span&gt;       &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;data&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;network&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;network&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;packer&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;packer&quot;&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-  &lt;span class=&quot;n&quot;&gt;source&lt;/span&gt;             &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;../modules/resource_group&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;name_suffix&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;each&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;value&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt;           &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;location&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;full_env_code&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;local&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;full_env_code&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;create&lt;/span&gt;             &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;enable_delete_lock&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;source&lt;/span&gt;             &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;../modules/resource_group&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name_suffix&lt;/span&gt;        &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;each&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;value&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;           &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;full_env_code&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;local&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;full_env_code&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;create&lt;/span&gt;             &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;enable_delete_lock&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;false&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;state-resource-reorg&quot;&gt;State resource reorg&lt;/h2&gt;
+&lt;hr /&gt;
 
-&lt;p&gt;After I made the changes and run a plan, I found a new challenge and it was of course the new resources did not match the information in my state file 🏃‍♂️🏃‍♂️🏃‍♂️🏃‍♂️🏃‍♂️ run!!!!
-Some inspection was required and start doing the needfuls(got this word in my head BT). However, I was having issues doing the state movement; I was getting the error below 😥&lt;/p&gt;
+&lt;h2 id=&quot;state-resource-reorganization&quot;&gt;State Resource Reorganization&lt;/h2&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;n&quot;&gt;terraform&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mv&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;packer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;azurerm_resource_group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rg&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rgs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;rg-packer&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;azurerm_resource_group&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rg&lt;/span&gt;                                     
+&lt;p&gt;After making these changes and running a plan, I encountered a new challenge: the new resources did not match the information in my state file. 🏃‍♂️ Some inspection was required, and I started doing the needful (thanks, BT, for that phrase). However, I had issues moving the state and received the following error:&lt;/p&gt;
 
-&lt;span class=&quot;no&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;Index&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;required&lt;/span&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;terraform state &lt;span class=&quot;nb&quot;&gt;mv &lt;/span&gt;module.rg-packer.azurerm_resource_group.rg  module.rgs[&lt;span class=&quot;s2&quot;&gt;&quot;rg-packer&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;.azurerm_resource_group.rg                                     
 
-  &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;source&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;code&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;available&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+Error: Index value required
 
-&lt;span class=&quot;no&quot;&gt;Index&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;brackets&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;must&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contain&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;either&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;literal&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;number&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;literal&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
+  on  line 1:
+  &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;source &lt;/span&gt;code not available&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 
-&lt;span class=&quot;no&quot;&gt;Releasing&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;This&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;may&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;take&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;few&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;moments&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+Index brackets must contain either a literal number or a literal string.
+
+Releasing state lock. This may take a few moments...
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;I started doing some quite powerful investigation (googling) and found in the terraform documentation how to &lt;a href=&quot;https://www.terraform.io/docs/commands/state/mv.html#example-move-a-resource-configured-with-for_each&quot;&gt;terraform state mv using for_each&lt;/a&gt;… so depending on which terminal are you using you will have to use different syntaxis for the state movement. In my current case, I was using PowerShell during this process hence I did the below&lt;/p&gt;
 
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;terraform&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;state&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mv&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'module.rg-packer.azurerm_resource_group.rg[0]'&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'module.rgs_mel[\&quot;rg-packer\&quot;].azurerm_resource_group.rg[0]'&lt;/span&gt;
+&lt;p&gt;After some investigation (a.k.a. Googling), I found in the Terraform documentation how to &lt;a href=&quot;https://www.terraform.io/docs/commands/state/mv.html#example-move-a-resource-configured-with-for_each&quot;&gt;terraform state mv using for_each&lt;/a&gt;. Depending on your terminal, you may need different syntax for the state movement. In my case, I was using PowerShell:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;terraform state &lt;span class=&quot;nb&quot;&gt;mv&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'module.rg-packer.azurerm_resource_group.rg[0]'&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'module.rgs_mel[\&quot;rg-packer\&quot;].azurerm_resource_group.rg[0]'&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;…..and wolla 💃!!,, state movement successful. I did the same for the rest of my resources :)&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2020-08-29/statemv-multiple.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;And voilà! 💃 State movement successful. I repeated this for the rest of my resources.&lt;/p&gt;
 
-&lt;h2 id=&quot;calling-the-module-outputs&quot;&gt;Calling the module outputs&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2020-08-29/statemv-multiple.jpg&quot; alt=&quot;State Movement Success&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;After my state migration was completed and run a plan to ensure all was good. I faced another needful and it was to replace all the statements where I was consuming my module outputs. Something like this!!!&lt;/p&gt;
-&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;azurerm_app_service_plan&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;various&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;                &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;azure-functions-cero-service-plan&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt;            &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;location&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;resource_group_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;rgs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;rg-management&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#using the for_each module output&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;kind&lt;/span&gt;                &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;FunctionApp&quot;&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;reserved&lt;/span&gt;            &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;
+&lt;hr /&gt;
 
-  &lt;span class=&quot;n&quot;&gt;sku&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;tier&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Dynamic&quot;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Y1&quot;&lt;/span&gt;
+&lt;h2 id=&quot;calling-the-module-outputs&quot;&gt;Calling the Module Outputs&lt;/h2&gt;
+
+&lt;p&gt;After completing my state migration and running a plan to ensure everything was correct, I needed to update all statements where I consumed module outputs. For example:&lt;/p&gt;
+
+&lt;div class=&quot;language-hcl highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;resource&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;azurerm_app_service_plan&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;various&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt;                &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;azure-functions-cero-service-plan&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;            &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;var&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;resource_group_name&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;rgs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;rg-management&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# using the for_each module output&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;kind&lt;/span&gt;                &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;FunctionApp&quot;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;reserved&lt;/span&gt;            &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
+
+  &lt;span class=&quot;nx&quot;&gt;sku&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;tier&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Dynamic&quot;&lt;/span&gt;
+    &lt;span class=&quot;nx&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Y1&quot;&lt;/span&gt;
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;the-no-changes-expected-&quot;&gt;The no changes expected 👼&lt;/h2&gt;
+&lt;hr /&gt;
 
-&lt;p&gt;Given all those changes were made the expected outcome was to not have any planned changes as we were only redesigning code. After my plan went as expected I run my Terraform Cloud workspace to apply my changes and the result was 🧙‍♂️&lt;/p&gt;
+&lt;h2 id=&quot;the-no-changes-expected-outcome-&quot;&gt;The “No Changes Expected” Outcome 👼&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2020-08-29/apply_TerraformCloud.jpg&quot; alt=&quot;image-center&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;After all these changes, the expected outcome was to have no planned changes, as we were only redesigning the code. My Terraform Cloud workspace applied the changes successfully, and the result was 🧙‍♂️&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/Blog/2020-08-29/apply_TerraformCloud.jpg&quot; alt=&quot;Terraform Cloud Apply&quot; class=&quot;align-center&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h2 id=&quot;summary&quot;&gt;Summary&lt;/h2&gt;
-&lt;p&gt;Terraform v13 is offering quite good new features that if you have been working with terraform for a while you were willing to have. Ovbiusly, the process for migrating current infrastructure to v13 is not quite straightforward. However, in the end this will be making your code management easier. I will be modifying my current code to leverage all the v13 features so I hope I can keep sharing my small progresses. I hope this helps someone, Hasta la vista!!!&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working in new content 🚴‍♂️.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Terraform v13 offers excellent new features that many long-time users have been waiting for. Migrating existing infrastructure to v13 is not always straightforward, but it ultimately makes code management easier. I will continue updating my code to leverage all v13 features and share my progress. I hope this helps someone—Hasta la vista!&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Terraform 13" /><category term="Azure" /><summary type="html">This article demonstrates how to use for_each in the Module-centric workflows</summary></entry><entry><title type="html">Terraform API using PowerShell - Workspace Information</title><link href="http://localhost:4000/blog/TFC" rel="alternate" type="text/html" title="Terraform API using PowerShell - Workspace Information" /><published>2020-08-05T00:00:00+00:00</published><updated>2020-08-05T00:00:00+00:00</updated><id>http://localhost:4000/blog/TFC</id><content type="html" xml:base="http://localhost:4000/blog/TFC">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🚴‍♂️ If you enjoyed this blog, you can empower me with some caffeine to continue working on new content. 🚴‍♂️&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>John Alfaro</name></author><category term="Blog" /><category term="Terraform Cloud" /><category term="Terraform Enterprise" /><category term="Terraform 13" /><category term="Azure" /><summary type="html">This article demonstrates how to use for_each in module-centric workflows.</summary></entry><entry><title type="html">Terraform API using PowerShell - Workspace Information</title><link href="http://localhost:4000/blog/TFC" rel="alternate" type="text/html" title="Terraform API using PowerShell - Workspace Information" /><published>2020-08-05T00:00:00+00:00</published><updated>2020-08-05T00:00:00+00:00</updated><id>http://localhost:4000/blog/TFC</id><content type="html" xml:base="http://localhost:4000/blog/TFC">&lt;p&gt;&lt;a href=&quot;https://www.buymeacoffee.com/cerocool&quot;&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/1376749/120938564-50c59780-c6e1-11eb-814f-22a0399623c5.png&quot; alt=&quot;&amp;quot;Buy Me A Coffee&amp;quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;🚀Hello there, This is my first post and I hope it helps someone and remember constructive feedback is always welcome🚀.&lt;/p&gt;
 
