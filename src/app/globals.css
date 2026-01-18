@@ -1,0 +1,126 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Geist Var", "Geist Sans", "Inter", "system-ui", "sans-serif";
+  --font-mono: "Geist Mono", "Fira Code", "monospace", "ui-monospace";
+  --color-background: #0f172a;
+  --color-foreground: #f8fafc;
+  --color-primary: #38bdf8;
+  --color-secondary: #818cf8;
+  --color-muted: #64748b;
+  --color-border: #1e293b;
+}
+
+:root {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --primary: #38bdf8;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  background-image:
+    linear-gradient(to right, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.05) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.glass {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, #38bdf8, #818cf8);
+}
+
+/* Legacy Jekyll Support & Content Styling */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.prose th {
+  background-color: rgba(56, 189, 248, 0.1);
+  /* Sky-400 with opacity */
+  color: #e2e8f0;
+  /* Slate-200 */
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid rgba(56, 189, 248, 0.2);
+}
+
+.prose td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  /* Slate-400 */
+}
+
+.prose tr:last-child td {
+  border-bottom: none;
+}
+
+.prose tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Notices / Alerts */
+.notice--info,
+.notice--warning,
+.notice--danger,
+.notice--success {
+  padding: 1.25rem 1.5rem;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  border-left: 4px solid;
+  position: relative;
+  /* Glassmorphism feel */
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.notice--info {
+  border-color: #38bdf8;
+  background: linear-gradient(to right, rgba(56, 189, 248, 0.1), rgba(15, 23, 42, 0.4));
+}
+
+.notice--warning {
+  border-color: #f59e0b;
+  background: linear-gradient(to right, rgba(245, 158, 11, 0.1), rgba(15, 23, 42, 0.4));
+}
+
+.notice--danger {
+  border-color: #ef4444;
+  background: linear-gradient(to right, rgba(239, 68, 68, 0.1), rgba(15, 23, 42, 0.4));
+}
+
+.notice--success {
+  border-color: #22c55e;
+  background: linear-gradient(to right, rgba(34, 197, 94, 0.1), rgba(15, 23, 42, 0.4));
+}
+
+.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
